@@ -1,19 +1,18 @@
 ####################### PARAMETERS ####################################
 import os
-import sys
-sys.path.append(r'C:\Users\user\Documents\Python Scripts\U\src\models')
+
 projectType = {
     1 : 'classification',
     2 : 'segmentation',
     3 : 'object-detection'
                 }
 ################### PARAMETERS TO CHANGE ###########################
-api_key = "land_sk_929mgCm9o1Hl59bHo1nLK0O9KH2wEcl4zDYUpYprJffl6f9onm"
+api_key = "land_sk_VtHE8Gx36OvgODIYxyl0cesFMhiZUJEvtEc3YI1Dk1C5tf76ku" #Enterprise-Org
 url_base = 'https://api.staging.landing.ai/v1'
 #%%
 ################### PARAMETERS TO CHANGE ###########################
-elegir_proyecto = projectType.get(3) 
-name_proyecto = 'Jun15-OD'
+elegir_proyecto = projectType.get(2) 
+name_proyecto = 'July-24th-Seg-Project-1st'
 #%%
 ######################## CREATE PROJECT ###############################
 import create_project as cp
@@ -29,7 +28,7 @@ gp.getProject(api_key, url, project_id)
 import create_classes as cc
 url = f'{url}/{project_id}/classes'
 if elegir_proyecto == 'classification':
-    data = {"0": {"name": "Roll Print"},"1": {"name": "Side line"}}
+    data = {"0": {"name": "Roll-Print"},"1": {"name": "Side-line"}}
 elif elegir_proyecto ==  'segmentation':
     data = {"1": {"name": "Screw"}}
 elif elegir_proyecto == 'object-detection':
@@ -41,10 +40,10 @@ import upload_images as ui
 url = url.replace('classes', 'images')
 if elegir_proyecto == 'classification':
     folders = [data[key]["name"] for key in data] # Se crea una lista, porque la clase es la misma carpeta
-    path = r'C:\Users\user\Desktop\images'
+    path = 'Images-CLASS'
     ui.upload_classification(api_key, url, folders, path)
 elif elegir_proyecto == 'object-detection':
-    path = r'C:\Users\user\Desktop\images\Snapshot-06-05-202422_44-171764549378\NoSplit'
+    path = 'Images-OD/Images'
     ui.upload_object_detection(api_key, url, directory=path)
     import auto_split as asp
     url = url.replace('images', 'autosplit')
@@ -61,7 +60,7 @@ elif elegir_proyecto == 'object-detection':
     asp.auto_split(url, api_key, data)
     
 elif elegir_proyecto == 'segmentation':
-    path = r'C:\Users\user\Downloads\Loops & Screws - Labeled Simple - SEG - ZIP\Loops & Screws - Labeled Simple - SEG - ZIP\Labeled Simple - SEG\train'
+    path = 'images-SEG/Images'
     ui.upload_segmentation(api_key, url, directory=path)
     import auto_split as asp
     url = url.replace('images', 'autosplit')
@@ -118,7 +117,7 @@ url = url.replace('deployments', 'usage/summary')
 # result = p.get_data_from_api(url, api_key)
 # print(result)
 if elegir_proyecto ==  'classification':
-    folder = 'Predictions\Class' # back slash is placed because of path sharing
+    folder = 'Predictions/Class'
 elif elegir_proyecto  == 'object-detection':
     folder = 'Images'
 elif elegir_proyecto  == 'segmentation':
