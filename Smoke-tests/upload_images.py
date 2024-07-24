@@ -106,7 +106,7 @@ def upload_object_detection(api_key:str, url:str, directory:str):
         # Prepare request data
         data = {
             "name": image_name,  # Required: File name from the loop
-            'tags': '["not_clean", "foo"]'
+            'tags': ["not_clean", "foo"]
         }
         task = thread_pool.submit(post_request, url, data, headers, files)
         tasks.append(task)
@@ -163,7 +163,7 @@ def upload_segmentation(api_key:str, url:str, directory:str):
         # Prepare request data
         data = {
             "name": image_name,  # Required: File name from the loop
-            'tags': '["not_clean", "foo"]'
+            'tags': ["not_clean", "foo"]
         }
         task = thread_pool.submit(post_request, url, data, headers, files)
         tasks.append(task)

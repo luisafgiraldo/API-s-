@@ -43,7 +43,7 @@ if elegir_proyecto == 'classification':
     path = 'Images-CLASS'
     ui.upload_classification(api_key, url, folders, path)
 elif elegir_proyecto == 'object-detection':
-    path = 'Images-OD/Images'
+    path = 'Images-OD'
     ui.upload_object_detection(api_key, url, directory=path)
     import auto_split as asp
     url = url.replace('images', 'autosplit')
@@ -60,7 +60,7 @@ elif elegir_proyecto == 'object-detection':
     asp.auto_split(url, api_key, data)
     
 elif elegir_proyecto == 'segmentation':
-    path = 'images-SEG/Images'
+    path = 'images-SEG'
     ui.upload_segmentation(api_key, url, directory=path)
     import auto_split as asp
     url = url.replace('images', 'autosplit')
