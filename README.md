@@ -1,26 +1,124 @@
-<h2>Libraries</h2>
-<ol>
-  <li> Pip install landingai </li>
-  <li> Pip install request </li>
-  <li> Pip install pandas </li>
-  <li> Pip install openpyxl </li>
-  <li> Pip install streamlit </li>
-</ol>
+# API
 
-<h2>Smoke Tests</h2>
-<p>This folder contains the execution of various APIs, including tests for creating projects of each type, uploading images, training, monitoring, creating endpoints for deployment, and making predictions.</p>
-<h3>How do I run this test?</h3>
-<p>You will open a terminal by pressing 'Control + Shift + Ñ' on your keyboard. Then, navigate to the Smoke-tests folder by typing 'cd Smoke-tests'.
-Once you're in the Smoke-tests folder, open the file named orquestador, which is located in the Smoke-tests folder.
-  [view see how the file is executed](https://drive.google.com/file/d/1ksYakD_OLG_Wi1Peq3ipn762S1S9rMxd/view?usp=sharing)
-</p>
-<h3>Parameters you need to change in the orchestrator:</h3>
-<p>The API Key, the base URL (depending on whether you want to run this script in dev or prod), the project type, and the project name. [In this image, I've highlighted where you need to make these changes](https://drive.google.com/file/d/1V1I_Q23cCT6lUbwiWsTsgoR1PWV1HUun/view?usp=sharing).</p>
-<h2>Large Images</h2>
-<p>In this folder, you'll find training with advanced options, the training monitor, and the get metrics.
-<h3>How do I run this test?</h3>
-<p>You will open a terminal by pressing Control + Shift + Ñ on your keyboard. Then, navigate to the Large images folder by typing cd Large images.
-Once you're in the Large images folder, open the file named orquestador, which is located in the Large images folder, and execute it in the same way as the smoke tests, by clicking on the run icon.</p>
-<h3>Parameters you need to change in the orchestrator:</h3>
-<p>The only parameter that needs to be changed is where the Excel file will be exported, which is in the reports folder located in the apis folder.</p>
+## Table of Contents
+
+- [Introduction](#introduction)
+- [LibrariRequirementses](#Requirements)
+- [Getting Started](#getting-started)
+- [Hi! What do you want to execute?](#hi-what-do-you-want-to-execute)
+
+# Introduction
+
+This project provides a set of APIs developed in Python to perform various tasks for Landing AI.
+
+Don’t worry, this project runs anywhere.
+
+## Requirements
+
+To run this project, you'll need:
+- Python 3.8 or higher
+- Libraries 
+  - `pip install landingai, requests, pandas, openpyxl, streamlit, numpy`
+
+## Getting Started
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/luisafgiraldo/API-s-.git
+   ```
+
+2. Open the project in Visual Studio Code
+3. Open the Console 
+
+    - **If you are using Windows OS:**
+
+        ```bash
+        Ctrl + J
+        ```
+
+    - **If you are using macOS:**
+
+        ```bash
+        Command + J
+        ```
+
+4. Run the file:
+
+    ```bash
+    python entorno.py
+    ```
+
+5. After running it, activate the virtual environment:
+
+    - **If you are using Windows OS:**
+
+        ```bash
+        .venv/Scripts/Activate
+        ```
+
+        If you encounter a permissions error, run this command:
+        
+        ```bash
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+        ```
+
+    - **If you are using macOS:**
+
+      ```bash
+      source venv/bin/activate
+      ```
+6. Run the file:
+
+    - **If you are using Windows OS:**
+
+        ```bash
+        py executor.py
+        ```
+
+    - **If you are using macOS:**
+
+        ```bash
+        python3 executor.py
+        ```
+
+### Hi! What do you want to execute?
+
+  1. Benchmarks  
+  2. Large Images  
+  3. Smoke-tests  
+  4. Snapshot  
+  5. VA  
+
+  **Select an option by typing the number** (e.g., `1` for Benchmarks).
+
+---
+
+When you run the `executor.py` script, this menu will appear asking you to choose an option. Based on your selection, the corresponding task will be executed. Just type the number corresponding to your choice, and the script will proceed with the selected operation.
+
+For example, if you choose `1`, it will execute the Benchmarks. Similarly, selecting any of the other options will trigger their respective actions.
+
+
+**Author**: Luisa Fernanda Aristizabal Giraldo
+**Position**: Tester QA
+Collapse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
