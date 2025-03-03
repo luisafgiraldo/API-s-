@@ -31,9 +31,9 @@ def login(browser):
 
     # Iniciar sesión
     page.fill("input[name='identifier']", env.USERNAME)
-    page.get_by_role("button", name="Iniciar sesión").click()
+    page.get_by_role("button", name="Sign in").click()
     page.fill("input[name='password']", env.PASSWORD)
-    page.get_by_role("button", name="Continuar").click()
+    page.get_by_role("button", name="Continue").click()
     print("✅ Login exitoso")
     
     return page  # Retornamos la página para reutilizarla
