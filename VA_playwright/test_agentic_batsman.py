@@ -44,16 +44,16 @@ def test_agentic_object_detection(browser):
 
         # Obtener la imagen de referencia correcta
         reference_image_path = env.REFERENCES_OD.get(element)
-        if reference_image_path:
-            if u.compare_images(captured_image_path, reference_image_path):
-                print("✅ Las imágenes coinciden")
-                # Opción para eliminar la imagen capturada
-                u.remove_image(captured_image_path)
-            else:
-                print("❌ Las imágenes son diferentes")
+        
+        result = u.compare_images(captured_image_path, reference_image_path)
+        print(result)
+        if result:
+            print("Entra")
+            print("✅ Las imágenes coinciden")
+            # Opción para eliminar la imagen capturada
+            u.remove_image(captured_image_path)
         else:
-            print(f"⚠️ No se encontró imagen de referencia para: {element}")
-
+            print("❌ Las imágenes son diferentes")
         # 🔄 Recargar el navegador después de procesar cada imagen
         print("🔄 Recargando la página para el siguiente elemento...")
         page.reload()

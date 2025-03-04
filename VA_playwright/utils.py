@@ -24,6 +24,7 @@ def compare_images(img1_path, img2_path):
     diff_bbox = diff.getbbox()
     return diff_bbox is None  # Si no hay diferencias significativas, devuelve True
 
+
 def login(browser):
     """ Realiza el inicio de sesión y devuelve la página cargada. """
     page = browser.new_page()
@@ -72,16 +73,11 @@ def time_step(iterator : int):
     return time.sleep(iterator)
 
 
-def remove_image(image_path=None):
+def remove_image(image_path):
     """Elimina una imagen si el usuario lo confirma."""
-    
-    # Si no se pasa una ruta, usar el valor por defecto de env.NAME_CAPTURED_IMAGE
-    if image_path is None:
-        image_path = env.NAME_CAPTURED_IMAGE
-
-        if os.path.exists(image_path):
-            os.remove(image_path)
-            print(f"✅ Archivo eliminado: {image_path}")
-        else:
-            print(f"⚠️ El archivo no existe: {image_path}")
+    if os.path.exists(image_path):
+        os.remove(image_path)
+        print(f"✅ Archivo eliminado: {image_path}")
+    else:
+        print(f"⚠️ El archivo no existe: {image_path}")
 

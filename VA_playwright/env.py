@@ -32,6 +32,8 @@ REFERENCES_OD = {
     ),
 }
 
+print(REFERENCES_OD.get("batsman"))
+
 
 # Formato de la imagen capturada (usando placeholders)
 CAPTURED_IMAGE_PATH = os.path.join(

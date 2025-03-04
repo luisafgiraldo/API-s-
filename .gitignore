@@ -4,3 +4,8 @@ venv/
 # Ignorar directorios __pycache__ y archivos *.pyc
 __pycache__/
 *.pyc
+
+
+echo ".DS_Store" >> .gitignore
+git add .gitignore
+

@@ -31,7 +31,20 @@ elif execute == 5:
     folder = os.path.join("VA", "orchestrator.py")
     sys.path.append("VA")
 elif execute == 6:
-    folder = os.path.join("VA_playwright", "test_agentic_batsman.py")
+
+    print("## TESTS ##")
+    print("1 test_agentic_batsman")
+    print("2 OTHER...")
+    print("3 OTHER...")
+
+    test = int(input("Select a number to execute: "))
+    print("")
+
+    if test == 1:
+        folder = os.path.join("VA_playwright", "test_agentic_batsman.py")
+    elif test == 2:
+        folder = 'example.py'
+        
     sys.path.append("VA_playwright")
 
 print(folder)
