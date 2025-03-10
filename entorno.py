@@ -55,7 +55,7 @@ if __name__ == "__main__":
     # Libraries to install
     libraries = [
         "landingai", "requests", "pandas", "openpyxl", "streamlit", "numpy",
-        "pytest-xdist", "pytest", "pyautogui", "playwright"
+        "pytest-xdist", "pytest", "pyautogui", "playwright, pytest-asyncio"
     ]
 
     # Additional commands to run after installation

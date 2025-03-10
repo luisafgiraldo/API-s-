@@ -63,7 +63,7 @@ def test_example_chats(browser):
     # Validate if the 'Deploy' button is visible
     page.wait_for_selector("button[data-testid='code-deploy-button']", timeout=10000)
     assert page.is_visible("button[data-testid='code-deploy-button']"), "❌ Error: The 'Deploy' button is not visible."
-    print("✅ 'Deploy' button is visible"")
+    print("✅ 'Deploy' button is visible")
 
     page.screenshot(path=os.path.join("VA_playwright", "CaptureImages", "captured_soda_chat.png"), full_page=True)
     print("📸 Screenshot saved successfully")
