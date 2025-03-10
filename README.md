@@ -45,8 +45,14 @@ To run this project, you'll need:
 
 4. Run the file:
 
+ - **If you are using Windows OS:**
     ```bash
     python entorno.py
+    ```
+
+ - **If you are using MacOS:**
+    ```bash
+    python3 entorno.py
     ```
 
 5. After running it, activate the virtual environment:
@@ -85,10 +91,12 @@ To run this project, you'll need:
 ### Hi! What do you want to execute?
 
   1. Benchmarks  
-  2. Large Images  
-  3. Smoke-tests  
-  4. Snapshot  
-  5. VA  
+  2. Epochs
+  3. Large Images  
+  4. Smoke-tests  
+  5. Snapshot  
+  6. VA
+  7. Va_playwright  
 
   **Select an option by typing the number** (e.g., `1` for Benchmarks).
 
@@ -98,10 +106,18 @@ When you run the `executor.py` script, this menu will appear asking you to choos
 
 For example, if you choose `1`, it will execute the Benchmarks. Similarly, selecting any of the other options will trigger their respective actions.
 
+For example, if you choose option 7, the VA_playwright tests will run, and the following menu will appear:
+### TESTS
+1. test_agentic_batsman.py
+2. test_living_room.py
+3. test_soda_chat.py
+ A. Execite all tests in parallel
+With this menu, the user can run each test individually or execute all tests in parallel, depending on the selected option.
+
 
 **Author**: Luisa Fernanda Aristizabal Giraldo
 **Position**: Tester QA
-Collapse
+
 
 
 

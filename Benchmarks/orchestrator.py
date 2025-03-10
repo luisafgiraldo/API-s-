@@ -6,7 +6,7 @@ import os
 # Base URL for API requests
 url_base = "https://api.staging.landing.ai/v1/projects"
 # API key for authentication
-api_key = "land_sk_T5RoQWkJzbRNLKtFc7hJchRJa3IdBZK5SZBBz5RBu7iB384BiX"  # Org: landing
+api_key = "land_sk_T5RoQWkJzbRNLKtFc7hJchRJa3IdBZK5SZBBz5RBu7iB384BiX"  # Org by kelly: FT Relase CW 20
 
 # Dictionary to map project type IDs to their corresponding names
 projectType = {1: "classification", 2: "segmentation", 3: "object-detection"}
@@ -102,7 +102,7 @@ v_commands_backbone = [
     p=1,
     type_project="{projectType.get(2)}",
     type_train="{trainType.get(2)}"
-#     """,
+    """,
     f"""
         project_id=27690194505764,
         name=None,

@@ -1,10 +1,12 @@
 import utils as u
 import os
+import time
 
 URL_BASE = "https://api.staging.landing.ai/v1/tools"
 IMAGES_PATH_BASE = os.path.join("VA", "Images")
 API_KEY = "eTdiN3pjM2dpbWlhbnIwMzJlcDdvOiNpbnRlcm5hbDpPQXN5YW5qRHpxOUJhQzduOFFnODlzRlAyck9UZDBUeQ=="
 
+start_time = time.time()
 
 def Owlv2():
 
@@ -195,3 +197,7 @@ def Barcode_Reader():
 
 
 Barcode_Reader()
+
+end_time = time.time()
+total_time_minutes = (end_time - start_time) / 60
+print(f"Total execution time: {total_time_minutes:.2f} minutes")

@@ -117,9 +117,9 @@ def execute(v_commands: list, url_base: str, api_key: str, df):
                     "project_id": str(project_id),
                     "time_training": elapsed_time,
                     "architecture": architecture,
-                    "train": train,
-                    "dev": dev,
-                    "test": test,
+                    "train": f"{float(train) * 100:.2f}%" if train not in [None, 'None', '', 'N/A'] else "N/A",
+                    "dev": f"{float(dev) * 100:.2f}%" if dev not in [None, 'None', '', 'N/A'] else "N/A",
+                    "test": f"{float(test) * 100:.2f}%" if test not in [None, 'None', '', 'N/A'] else "N/A",
                     "date": current_date_time,
                 }
             ]

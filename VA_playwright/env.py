@@ -1,9 +1,9 @@
-# Credenciales
+# Credentials
 USERNAME = "luisa_aristizabal23211@elpoli.edu.co"
-PASSWORD = "dots&lines&tests1496"
+PASSWORD = "Luisa233@"
 URL = "https://va.staging.landing.ai/"
 
-# Lista de elementos a probar
+# List of elements to test
 ELEMENTS_OD = [
     "batsman",
     "black coffee in a cup with saucer",
@@ -13,7 +13,7 @@ ELEMENTS_OD = [
     "frame with city map",
 ]
 
-# Diccionario con rutas de imágenes de referencia
+# Dictionary with reference image paths
 import os
 
 IMAGES_PATH_BASE = os.path.join("VA_playwright", "Images")
@@ -35,7 +35,7 @@ REFERENCES_OD = {
 print(REFERENCES_OD.get("batsman"))
 
 
-# Formato de la imagen capturada (usando placeholders)
+# Format for the captured image (using placeholders)
 CAPTURED_IMAGE_PATH = os.path.join(
     "VA_playwright", "CaptureImages", "captured_image_{}.png"
 )

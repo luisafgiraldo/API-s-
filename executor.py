@@ -3,60 +3,80 @@ import os
 import pytest
 
 print("-----------------------------")
-print("Hi! What do you want to execute ? ")
-print("1 Benchmarks")
-print("2 Large Images")
-print("3 Smoke-tests")
-print("4 Snapshot")
-print("5 VA")
-print("6 VA playwright")
+print("Hi! What do you want to execute?")
 print("-----------------------------")
 
-execute = int(input("Select a number to execute: "))
-print("")
+# Get all folders in the current directory, excluding unwanted folders
+excluir_carpetas = ['__pycache__', '.pytest_cache', 'venv', '.git']
+directorio_actual = os.getcwd()
+carpetas = [carpeta for carpeta in os.listdir(directorio_actual)
+            if os.path.isdir(os.path.join(directorio_actual, carpeta)) and carpeta not in excluir_carpetas]
 
-if execute == 1:
-    folder = os.path.join("Benchmarks", "orchestrator.py")
-    sys.path.append("Benchmarks")
-elif execute == 2:
-    folder = os.path.join("Large Images", "orchestrator.py")
-    sys.path.append("Large Images")
-elif execute == 3:
-    folder = os.path.join("Smoke-tests", "orchestrator.py")
-    sys.path.append("Smoke-tests")
-elif execute == 4:
-    folder = os.path.join("Snapshot", "orchestrator.py")
-    sys.path.append("Snapshot")
-elif execute == 5:
-    folder = os.path.join("VA", "orchestrator.py")
-    sys.path.append("VA")
-elif execute == 6:
+# Sort folders alphabetically
+carpetas.sort()
 
+# Display available folders in alphabetical order
+for i, carpeta in enumerate(carpetas, start=1):
+    print(f"{i} {carpeta}")
+
+print("-----------------------------")
+
+# Select the folder using a while loop
+carpeta_seleccionada = None
+while carpeta_seleccionada is None:
+    try:
+        execute = int(input("Select a number to execute: ")) - 1
+        if 0 <= execute < len(carpetas):
+            carpeta_seleccionada = carpetas[execute]
+        else:
+            print("❌ Invalid selection. Try again.")
+    except ValueError:
+        print("❌ Please enter a valid number.")
+
+folder = os.path.join(carpeta_seleccionada, "orchestrator.py")
+sys.path.append(carpeta_seleccionada)
+
+# If the folder is VA_playwright, offer test selection
+if carpeta_seleccionada == "VA_playwright":
+    print("-----------------------------")
     print("## TESTS ##")
-    print("1 test_agentic_batsman")
-    print("2 OTHER...")
-    print("3 OTHER...")
-
-    test = int(input("Select a number to execute: "))
+    tests = [archivo for archivo in os.listdir(carpeta_seleccionada)
+             if archivo.startswith("test_") and archivo.endswith(".py")]
+    tests.sort()
+    for i, test in enumerate(tests, start=1):
+        print(f"{i} {test}")
+    print("A Execute all tests in parallel")
     print("")
 
-    if test == 1:
-        folder = os.path.join("VA_playwright", "test_agentic_batsman.py")
-    elif test == 2:
-        folder = 'example.py'
-        
-    sys.path.append("VA_playwright")
+    test = None
+    while test is None:
+        seleccion = input("Select a test to execute (or 'A' for all in parallel): ").strip()
+        if seleccion.upper() == 'A':
+            folder = carpeta_seleccionada
+            test = 'all'
+        else:
+            try:
+                seleccion = int(seleccion) - 1
+                if 0 <= seleccion < len(tests):
+                    test = seleccion
+                    folder = os.path.join(carpeta_seleccionada, tests[test])
+                else:
+                    print("❌ Invalid test selection. Try again.")
+            except ValueError:
+                print("❌ Please enter a valid number or 'A' for all.")
 
-print(folder)
+print(f"📂 Executing: {folder}\n")
 
-if execute == 6:
-    result = pytest.main([folder])
-    print(result)
-    # Verificar el resultado de pytest
-    if result == 0:
-        print("✅ Todas las pruebas pasaron correctamente")
+if carpeta_seleccionada == "VA_playwright":
+    if test == 'all':
+        result = pytest.main(['-n', 'auto', '--continue-on-collection-errors', '--maxfail=999', carpeta_seleccionada])
     else:
-        print("❌ Algunas pruebas fallaron")
+        result = pytest.main([folder, '--continue-on-collection-errors', '--maxfail=999'])
+    print(result)
+    if result == 0:
+        print("✅ All tests passed successfully")
+    else:
+        print("❌ Some tests failed")
 else:
     with open(folder) as f:
         exec(f.read())

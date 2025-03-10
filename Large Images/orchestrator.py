@@ -1,6 +1,7 @@
 import custom_trainning as ct
 import pandas as pd
 import openpyxl
+import time
 from datetime import datetime
 import os
 
@@ -196,8 +197,15 @@ v_commands_large_images = [
     """,
 ]
 
+# Measure execution time in hours
+start_time = datetime.now()
+
 # Execute large images training commands and update DataFrame
 large_images = ct.execute(v_commands_large_images, url_base, api_key, df)
+
+end_time = datetime.now()
+execution_time = (end_time - start_time).total_seconds() / 3600
+print(f"Execution time: {execution_time:.2f} hours")
 
 result_vertical_reset = large_images
 

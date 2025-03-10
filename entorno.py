@@ -3,42 +3,65 @@ import subprocess
 import sys
 
 
-def crear_entorno_virtual(nombre_env="venv", requerimientos=None):
+def create_virtual_environment(env_name="venv", requirements=None, post_install_commands=None):
     """
-    Crea un entorno virtual y asegura que las librerías necesarias estén instaladas.
+    Creates a virtual environment and ensures the necessary libraries are installed.
     Args:
-        nombre_env (str): Nombre o ruta del entorno virtual.
-        requerimientos (list): Lista de librerías a instalar.
+        env_name (str): Name or path of the virtual environment.
+        requirements (list): List of libraries to install.
+        post_install_commands (list): List of additional commands to run.
     """
-    # Verifica si ya existe la carpeta del entorno virtual
-    if not os.path.exists(nombre_env):
-        print(f"Creando el entorno virtual en '{nombre_env}'...")
-        subprocess.check_call([sys.executable, "-m", "venv", nombre_env])
+    # Check if the virtual environment folder already exists
+    if not os.path.exists(env_name):
+        print(f"Creating the virtual environment in '{env_name}'...")
+        subprocess.check_call([sys.executable, "-m", "venv", env_name])
     else:
-        print(f"El entorno virtual '{nombre_env}' ya existe.")
+        print(f"The virtual environment '{env_name}' already exists.")
 
-    # Activar el entorno virtual (esto es automático para instalar)
+    # Activate the pip executable of the virtual environment
     pip_executable = (
-        os.path.join(nombre_env, "Scripts", "pip")
+        os.path.join(env_name, "Scripts", "pip")
         if os.name == "nt"
-        else os.path.join(nombre_env, "bin", "pip")
+        else os.path.join(env_name, "bin", "pip")
+    )
+    
+    # Activate the Python executable of the virtual environment
+    python_executable = (
+        os.path.join(env_name, "Scripts", "python")
+        if os.name == "nt"
+        else os.path.join(env_name, "bin", "python")
     )
 
-    # Actualizar pip
-    print("Actualizando pip...")
+    # Update pip
+    print("Updating pip...")
     subprocess.check_call([pip_executable, "install", "--upgrade", "pip"])
-    # Instalar los requerimientos si se proporcionan
-    if requerimientos:
-        print("Instalando las librerías requeridas...")
-        subprocess.check_call([pip_executable, "install"] + requerimientos)
+
+    # Install required libraries
+    if requirements:
+        print("Installing required libraries...")
+        subprocess.check_call([pip_executable, "install"] + requirements)
+
+    # Run additional commands (e.g., playwright install chromium)
+    if post_install_commands:
+        print("Running additional commands...")
+        for command in post_install_commands:
+            subprocess.check_call([python_executable, "-m"] + command.split())
 
 
 if __name__ == "__main__":
-    # Nombre del entorno virtual
-    nombre_env = "venv"
+    # Virtual environment name
+    env_name = "venv"
 
-    # Librerías que quieres instalar
-    librerias = ["landingai", "requests", "pandas", "openpyxl", "streamlit", "numpy"]
+    # Libraries to install
+    libraries = [
+        "landingai", "requests", "pandas", "openpyxl", "streamlit", "numpy",
+        "pytest-xdist", "pytest", "pyautogui", "playwright"
+    ]
 
-    # Crear el entorno virtual e instalar las librerías
-    crear_entorno_virtual(nombre_env, librerias)
+    # Additional commands to run after installation
+    additional_commands = [
+        "playwright install chromium"
+    ]
+
+    # Create the virtual environment and install libraries and additional commands
+    create_virtual_environment(env_name, libraries, additional_commands)
