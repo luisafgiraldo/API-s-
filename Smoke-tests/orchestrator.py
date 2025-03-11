@@ -1,6 +1,10 @@
 ####################### PARAMETERS ####################################
 import os
 from datetime import datetime
+import time
+
+# Start time
+start_time = time.time()
 
 fecha_actual = datetime.now().strftime("%Y-%m-%d")
 print(fecha_actual)
@@ -142,3 +146,14 @@ for i in range(1, 4):
         folder = "Images"
     image_dir = os.path.join(path, folder)
     p.predict(image_dir=image_dir, endpoint_id=endpoint_id, api_key=api_key)
+
+# End time and execution time calculation
+end_time = time.time()
+execution_time = end_time - start_time
+
+# Convert time to hours, minutes, and seconds
+hours = int(execution_time // 3600)
+minutes = int((execution_time % 3600) // 60)
+seconds = int(execution_time % 60)
+
+print(f"Total execution time: {hours} hours, {minutes} minutes, and {seconds} seconds.")
