@@ -241,7 +241,7 @@ v_commands_backbone = [
 ]
 
 # Execute backbone training commands and update DataFrame
-backbone = ctb.execute(v_commands_backbone, url_base, api_key, df)
+backbone = ct.execute(v_commands_backbone, url_base, api_key, df)
 
 result_vertical_reset = pd.concat([epochs, backbone], axis=0).reset_index(drop=True)
 
