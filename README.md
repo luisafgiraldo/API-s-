@@ -18,7 +18,7 @@ Don’t worry, this project runs anywhere.
 To run this project, you'll need:
 - Python 3.8 or higher
 - Libraries 
-  - `pip install landingai, requests, pandas, openpyxl, streamlit, numpy`
+  - `pip install landingai, requests, pandas, openpyxl, streamlit, numpy, pytest-xdist, pytest, pyautogui, playwright, pytest-asyncio `
 
 ## Getting Started
 
@@ -111,7 +111,8 @@ For example, if you choose option 7, the VA_playwright tests will run, and the f
 1. test_agentic_batsman.py
 2. test_living_room.py
 3. test_soda_chat.py
- A. Execite all tests in parallel
+ A. Execite all tests in parallel.
+ 
 With this menu, the user can run each test individually or execute all tests in parallel, depending on the selected option.
 
 
