@@ -6,42 +6,42 @@ print("-----------------------------")
 print("Hi! What do you want to execute?")
 print("-----------------------------")
 
-# Get all folders in the current directory, excluding unwanted folders
-excluir_carpetas = ['__pycache__', '.pytest_cache', 'venv', '.git']
-directorio_actual = os.getcwd()
-carpetas = [carpeta for carpeta in os.listdir(directorio_actual)
-            if os.path.isdir(os.path.join(directorio_actual, carpeta)) and carpeta not in excluir_carpetas]
+# Get all folders in the current directory, excluding unwanted ones
+exclude_folders = ['__pycache__', '.pytest_cache', 'venv', '.git']
+current_directory = os.getcwd()
+folders = [folder for folder in os.listdir(current_directory)
+           if os.path.isdir(os.path.join(current_directory, folder)) and folder not in exclude_folders]
 
 # Sort folders alphabetically
-carpetas.sort()
+folders.sort()
 
 # Display available folders in alphabetical order
-for i, carpeta in enumerate(carpetas, start=1):
-    print(f"{i} {carpeta}")
+for i, folder in enumerate(folders, start=1):
+    print(f"{i} {folder}")
 
 print("-----------------------------")
 
-# Select the folder using a while loop
-carpeta_seleccionada = None
-while carpeta_seleccionada is None:
+# Folder selection
+selected_folder = None
+while selected_folder is None:
     try:
         execute = int(input("Select a number to execute: ")) - 1
-        if 0 <= execute < len(carpetas):
-            carpeta_seleccionada = carpetas[execute]
+        if 0 <= execute < len(folders):
+            selected_folder = folders[execute]
         else:
             print("❌ Invalid selection. Try again.")
     except ValueError:
         print("❌ Please enter a valid number.")
 
-folder = os.path.join(carpeta_seleccionada, "orchestrator.py")
-sys.path.append(carpeta_seleccionada)
+folder = os.path.join(selected_folder, "orchestrator.py")
+sys.path.append(selected_folder)
 
-# If the folder is VA_playwright, offer test selection
-if carpeta_seleccionada == "VA_playwright":
+# If the selected folder is VA_playwright, offer test selection
+if selected_folder == "VA_playwright":
     print("-----------------------------")
     print("## TESTS ##")
-    tests = [archivo for archivo in os.listdir(carpeta_seleccionada)
-             if archivo.startswith("test_") and archivo.endswith(".py")]
+    tests = [file for file in os.listdir(selected_folder)
+             if file.startswith("test_") and file.endswith(".py")]
     tests.sort()
     for i, test in enumerate(tests, start=1):
         print(f"{i} {test}")
@@ -50,16 +50,16 @@ if carpeta_seleccionada == "VA_playwright":
 
     test = None
     while test is None:
-        seleccion = input("Select a test to execute (or 'A' for all in parallel): ").strip()
-        if seleccion.upper() == 'A':
-            folder = carpeta_seleccionada
+        selection = input("Select a test to execute (or 'A' for all in parallel): ").strip()
+        if selection.upper() == 'A':
+            folder = selected_folder
             test = 'all'
         else:
             try:
-                seleccion = int(seleccion) - 1
-                if 0 <= seleccion < len(tests):
-                    test = seleccion
-                    folder = os.path.join(carpeta_seleccionada, tests[test])
+                selection = int(selection) - 1
+                if 0 <= selection < len(tests):
+                    test = tests[selection]
+                    folder = os.path.join(selected_folder, test)
                 else:
                     print("❌ Invalid test selection. Try again.")
             except ValueError:
@@ -67,11 +67,13 @@ if carpeta_seleccionada == "VA_playwright":
 
 print(f"📂 Executing: {folder}\n")
 
-if carpeta_seleccionada == "VA_playwright":
+# Run Playwright with real-time logs
+if selected_folder == "VA_playwright":
     if test == 'all':
-        result = pytest.main(['-n', 'auto', '--continue-on-collection-errors', '--maxfail=999', carpeta_seleccionada])
+        result = pytest.main(['-s', '-n', 'auto', '--continue-on-collection-errors', '--maxfail=999', selected_folder])
     else:
-        result = pytest.main([folder, '--continue-on-collection-errors', '--maxfail=999'])
+        result = pytest.main(['-s', folder, '--continue-on-collection-errors', '--maxfail=999'])
+    
     print(result)
     if result == 0:
         print("✅ All tests passed successfully")
@@ -80,3 +82,5 @@ if carpeta_seleccionada == "VA_playwright":
 else:
     with open(folder) as f:
         exec(f.read())
+
+

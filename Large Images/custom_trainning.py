@@ -242,7 +242,7 @@ def execute(v_commands: list, url_base: str, api_key: str, df):
         # Format the current date and time as a string
         current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-        print("Fecha y hora actual:", current_date_time)
+        print("current date and time:", current_date_time)
 
         architecture = project_data["payload"]["model"]["architecture"]
 

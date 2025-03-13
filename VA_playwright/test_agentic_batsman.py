@@ -6,54 +6,54 @@ TOOL_NAME = "Agentic Object Detection"
 
 
 def test_agentic_object_detection(browser):
-    """Ejecuta la prueba para todos los elementos de env.ELEMENTS_OD en un ciclo for."""
+    """Runs the test for all elements in env.ELEMENTS_OD in a for loop."""
 
-    # Iniciar sesión
+    # Log in
     page = u.login(browser)
 
-    # Navegar a la API
+    # Navigate to the API
     u.navigate_to_explore_apis(page)
     u.navigate_tool(page, TOOL_NAME)
 
-    # Iterar sobre cada elemento de prueba
+    # Iterate over each test element
     for element in env.ELEMENTS_OD:
-        print(f"🔍 Probando con el elemento: {element}")
+        print(f"🔍 Testing with element: {element}")
 
-        # Esperar que la página cargue completamente antes de cada interacción
+        # Wait for the page to fully load before each interaction
         page.wait_for_load_state("networkidle")
 
-        # Intentar hacer clic en la imagen
+        # Try clicking on the image
         try:
             img_selector = f"img[alt*='{element}']"
             page.wait_for_selector(img_selector, timeout=20000)
             u.click_image(page, element)
         except Exception as e:
-            print(f"⚠️ No se encontró la imagen '{element}': {e}")
-            continue  # Salta al siguiente elemento en la lista
+            print(f"⚠️ image '{element}' not found: {e}")
+            continue  # Skip to the next element in the list
 
-        print("⏳ Esperando 50 segundos...")
+        print("⏳ Waiting 50 seconds...")
         u.time_step(50)
 
-        # Definir la ruta de la imagen capturada
+        # Define the path of the captured image
         captured_image_path = env.CAPTURED_IMAGE_PATH.format(element.replace(" ", "_"))
 
-        # Capturar pantalla del elemento SVG
+        # Capture a screenshot of the SVG element
         svg_element = page.locator("svg.relative.size-full")
         svg_element.screenshot(path=captured_image_path)
-        print(f"📸 Captura de pantalla guardada: {captured_image_path}")
+        print(f"📸 Screenshot saved: {captured_image_path}")
 
-        # Obtener la imagen de referencia correcta
+        # Get the correct reference image
         reference_image_path = env.REFERENCES_OD.get(element)
         
         result = u.compare_images(captured_image_path, reference_image_path)
         print(result)
         if result:
-            print("Entra")
-            print("✅ Las imágenes coinciden")
-            # Opción para eliminar la imagen capturada
+            print("Entering")
+            print("✅ Images match")
+            # Option to delete the captured image
             u.remove_image(captured_image_path)
         else:
-            print("❌ Las imágenes son diferentes")
-        # 🔄 Recargar el navegador después de procesar cada imagen
-        print("🔄 Recargando la página para el siguiente elemento...")
+            print("❌ Images are different")
+        # 🔄 Reload the browser after processing each image
+        print("🔄 Reloading the page for the next element...")
         page.reload()
