@@ -1,24 +1,22 @@
 import utils as u
 import os
 import time
+from Florencev2QA import create
 
-URL_BASE = "https://api.staging.landing.ai/v1/tools"
+URL_BASE = "https://api.va.staging.landing.ai/v1/tools"
 IMAGES_PATH_BASE = os.path.join("VA", "Images")
-API_KEY = "eTdiN3pjM2dpbWlhbnIwMzJlcDdvOiNpbnRlcm5hbDpPQXN5YW5qRHpxOUJhQzduOFFnODlzRlAyck9UZDBUeQ=="
+API_KEY = "eTdiN3pjM2dpbWlhbnIwMzJlcDdvOnFoTlZZNDIwTk9ORDV4U3M5UVA3R0JZN1VrS3JhVXV0"
 
 start_time = time.time()
 
 def Owlv2():
-
     import Owlv2
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "OWLv2 Image")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/owlv2"
     PROMPTS = "Detect animals"
 
-    Owlv2 = Owlv2.create(URL, IMAGE_PATH, PROMPTS)
-
+    Owlv2 = Owlv2.create(URL, IMAGE_PATH, PROMPTS, API_KEY)
 
 Owlv2()
 
@@ -32,7 +30,7 @@ def Countgd():
     URL = f"{URL_BASE}/countgd"
     PROMPTS = "Dogs"
 
-    Countgd = Countgd.create(URL, IMAGE_PATH, PROMPTS)
+    Countgd = Countgd.create(URL, IMAGE_PATH, PROMPTS, API_KEY)
 
 
 Countgd()
@@ -47,7 +45,7 @@ def Florencev2_Roberta():
     URL = f"{URL_BASE}/florence2"
     TASK = "<CAPTION>"
 
-    Florencev2 = Florencev2.create(URL, IMAGE_PATH, TASK)
+    Florencev2 = Florencev2.create(URL, IMAGE_PATH, TASK, API_KEY)
 
 
 Florencev2_Roberta()
@@ -62,7 +60,7 @@ def Florencev2_OCR():
     URL = f"{URL_BASE}/florence2"
     TASK = "<OCR>"
 
-    Florencev2 = Florencev2.create(URL, IMAGE_PATH, TASK)
+    Florencev2 = Florencev2.create(URL, IMAGE_PATH, TASK, API_KEY)
 
 
 Florencev2_OCR()
@@ -77,7 +75,7 @@ def Florencev2QA():
     URL = f"{URL_BASE}/florence2-qa"
     QUESTION = "What color is the car?"
 
-    Florencev2QA = Florencev2QA.create(URL, IMAGE_PATH, QUESTION)
+    Florencev2QA = Florencev2QA.create(URL, IMAGE_PATH, QUESTION, API_KEY)
 
 
 Florencev2QA()
@@ -92,7 +90,7 @@ def Depth_Anything_V2():
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/depth-anything-v2"
 
-    Depth_Anything_V2 = Depth_Anything_V2.create(URL, IMAGE_PATH)
+    Depth_Anything_V2 = Depth_Anything_V2.create(URL, IMAGE_PATH, API_KEY)
     print(Depth_Anything_V2)
 
 
@@ -123,7 +121,7 @@ def nsfw_classification():
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/nsfw-classification"
 
-    nsfw_classification = nsfw_classification.create(URL, IMAGE_PATH)
+    nsfw_classification = nsfw_classification.create(URL, IMAGE_PATH, API_KEY)
 
 
 nsfw_classification()
@@ -137,7 +135,7 @@ def Wsi_Embedding():
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/wsi-embedding"
 
-    Wsi_Embedding = Wsi_Embedding.create(URL, IMAGE_PATH)
+    Wsi_Embedding = Wsi_Embedding.create(URL, IMAGE_PATH, API_KEY)
 
 
 Wsi_Embedding()
@@ -151,7 +149,7 @@ def qr_reader():
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/qr-reader"
 
-    qr_reader = qr_reader.create(URL, IMAGE_PATH)
+    qr_reader = qr_reader.create(URL, IMAGE_PATH, API_KEY)
 
 
 qr_reader()
@@ -165,7 +163,7 @@ def loca():
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/loca"
 
-    loca = loca.create(URL, IMAGE_PATH)
+    loca = loca.create(URL, IMAGE_PATH, API_KEY)
 
 
 loca()
@@ -179,22 +177,20 @@ def Pose_Detection():
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/pose-detector"
 
-    Pose_Detection = Pose_Detection.create(URL, IMAGE_PATH)
+    Pose_Detection = Pose_Detection.create(URL, IMAGE_PATH, API_KEY)
 
 
 Pose_Detection()
 
 
 def Barcode_Reader():
-
     import Barcode_Reader
 
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Barcode Reader")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/barcode-reader"
 
-    Barcode_Reader = Barcode_Reader.create(URL, IMAGE_PATH)
-
+    Barcode_Reader = Barcode_Reader.create(URL, IMAGE_PATH, API_KEY)
 
 Barcode_Reader()
 

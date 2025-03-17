@@ -3,7 +3,7 @@ import pandas as pd
 import utils as u
 
 
-def create(url: str, image_path: str, prompt: str):
+def create(url: str, image_path: str, prompt: str, api_key: str):
     querystring = {"timeout": "300"}
 
     # Crear el payload
@@ -12,6 +12,7 @@ def create(url: str, image_path: str, prompt: str):
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
+        "Authorization": f"Basic {api_key}",
     }
 
     try:
