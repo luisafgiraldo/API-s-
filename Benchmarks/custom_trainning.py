@@ -65,6 +65,7 @@ def execute(v_commands: list, url_base: str, api_key: str, df):
         url = f"{url_base}/{project_id}/train/{training_id}/results/metrics"
         try:
             metrics = gm.metrics_summary(api_key=api_key, url=url)
+            print(metrics)
         except Exception as e:
             metrics = f"Error retrieving metrics: {e}"
             print(f"Error retrieving metrics: {e}")
@@ -121,6 +122,7 @@ def execute(v_commands: list, url_base: str, api_key: str, df):
                     "dev": f"{round(float(dev) * 100)}%" if dev not in [None, 'None', '', 'N/A'] else "N/A",
                     "test": f"{round(float(test) * 100)}%" if test not in [None, 'None', '', 'N/A'] else "N/A",
                     "date": current_date_time,
+                    "epochs": str(20)
                 }
             ]
         )

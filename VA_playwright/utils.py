@@ -10,7 +10,7 @@ import pyautogui
 def browser():
     screen_width, screen_height = pyautogui.size()  # Get screen size
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         context = browser.new_context(viewport={"width": screen_width, "height": screen_height})
         yield context
         browser.close()

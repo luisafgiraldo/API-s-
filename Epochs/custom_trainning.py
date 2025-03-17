@@ -143,6 +143,7 @@ df = pd.DataFrame(
         "rescaleWithPadding",
         "metrics",
         "date",
+        "epochs"
     ]
 )
 
@@ -157,6 +158,8 @@ def execute(v_commands: list, url_base: str, api_key: str, df):
         project_id = command_args.pop("project_id", None)
         type_project = command_args.pop("type_project", None)
         type_train = command_args.pop("type_train", None)
+        epochs = command_args.get("epochs", None)  
+
 
         project_data = create_project_payload(
             project_id=project_id,
@@ -269,9 +272,8 @@ def execute(v_commands: list, url_base: str, api_key: str, df):
                     "train": f"{round(float(train) * 100)}%" if train not in [None, 'None', '', 'N/A'] else "N/A",
                     "dev": f"{round(float(dev) * 100)}%" if dev not in [None, 'None', '', 'N/A'] else "N/A",
                     "test": f"{round(float(test) * 100)}%" if test not in [None, 'None', '', 'N/A'] else "N/A",
-
-
                     "date": current_date_time,
+                    "epochs":epochs
                 }
             ]
         )

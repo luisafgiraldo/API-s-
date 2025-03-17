@@ -1,6 +1,6 @@
 # Credentials
-USERNAME = "luisa_aristizabal23211@elpoli.edu.co"
-PASSWORD = "Luisa233@"
+USERNAME = "internal.qatest@landing.ai"
+PASSWORD = "rmb@pct0gnc2PYG9tza"
 URL = "https://va.staging.landing.ai/"
 
 # List of elements to test
