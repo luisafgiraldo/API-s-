@@ -1,72 +1,62 @@
-name: Run All Rate Limit Tiers
+name: run-rate-limit-tests
 
 on:
-  workflow_dispatch:  # Permite ejecutar manualmente desde la pestaña "Actions"
+  workflow_dispatch:  # Ejecutar solo manualmente
 
 jobs:
-  tier1:
+  run-tier1:
     name: Run AGDE Tier 1
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: API-s-/Rate-Limit
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Give permission to script
-        run: chmod +x run-agde-tier1.sh
+      - name: Give execution permissions
+        run: chmod +x Rate-Limit/run-agde-tier1.sh
 
       - name: Run Tier 1 script
-        run: ./run-agde-tier1.sh
+        run: ./Rate-Limit/run-agde-tier1.sh
 
       - name: Upload Tier 1 log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
-          name: request_log_tier1
-          path: API-s-/Rate-Limit/request_log_tier1.txt
+          name: request-log-tier1
+          path: Rate-Limit/request_log_tier1.txt
 
-  tier2:
+  run-tier2:
     name: Run AGDE Tier 2
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: API-s-/Rate-Limit
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Give permission to script
-        run: chmod +x run-agde-tier2.sh
+      - name: Give execution permissions
+        run: chmod +x Rate-Limit/run-agde-tier2.sh
 
       - name: Run Tier 2 script
-        run: ./run-agde-tier2.sh
+        run: ./Rate-Limit/run-agde-tier2.sh
 
       - name: Upload Tier 2 log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
-          name: request_log_tier2
-          path: API-s-/Rate-Limit/request_log_tier2.txt
+          name: request-log-tier2
+          path: Rate-Limit/request_log_tier2.txt
 
-  tier3:
+  run-tier3:
     name: Run AGDE Tier 3
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: API-s-/Rate-Limit
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Give permission to script
-        run: chmod +x run-agde-tier3.sh
+      - name: Give execution permissions
+        run: chmod +x Rate-Limit/run-agde-tier3.sh
 
       - name: Run Tier 3 script
-        run: ./run-agde-tier3.sh
+        run: ./Rate-Limit/run-agde-tier3.sh
 
       - name: Upload Tier 3 log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
-          name: request_log_tier3
-          path: API-s-/Rate-Limit/request_log_tier3.txt
-
+          name: request-log-tier3
+          path: Rate-Limit/request_log_tier3.txt
