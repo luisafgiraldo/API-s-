@@ -4,7 +4,7 @@ API_KEY=cXVsN2t2eDNyYnN1M2EwdHRqeXp1OkFQeUpQa1Y4Y3hucXBDaWpFbHBJdlYzWXJsakRndG1K
 PARALLEL_REQUESTS=60
 TOTAL_REQUESTS=180
 
-LOG_FILE="request_log_tier3.rtf"
+LOG_FILE="request_log.txt"
 COUNTER_200=0
 COUNTER_429=0
 COUNTER_OTHER=0
@@ -72,4 +72,3 @@ COUNTER_OTHER=$(grep -c '^OTHER$' .status_temp)
 rm -f .status_temp
 
 echo "✅ Requests completed. Log saved to $LOG_FILE"
-
