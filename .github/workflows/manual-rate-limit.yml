@@ -3,6 +3,11 @@ name: run-rate-limit-tests
 on:
   workflow_dispatch:  # Ejecutar solo manualmente
 
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
 jobs:
   run-tier1:
     name: Run AGDE Tier 1
@@ -18,7 +23,7 @@ jobs:
         run: ./Rate-Limit/run-agde-tier1.sh
 
       - name: Upload Tier 1 log
-        uses: actions/upload-artifact@v2  # Usando una versión anterior y estable
+        uses: actions/upload-artifact@v2
         with:
           name: request-log-tier1
           path: Rate-Limit/request_log_tier1.txt
@@ -37,7 +42,7 @@ jobs:
         run: ./Rate-Limit/run-agde-tier2.sh
 
       - name: Upload Tier 2 log
-        uses: actions/upload-artifact@v2  # Usando una versión anterior y estable
+        uses: actions/upload-artifact@v2
         with:
           name: request-log-tier2
           path: Rate-Limit/request_log_tier2.txt
@@ -56,7 +61,7 @@ jobs:
         run: ./Rate-Limit/run-agde-tier3.sh
 
       - name: Upload Tier 3 log
-        uses: actions/upload-artifact@v2  # Usando una versión anterior y estable
+        uses: actions/upload-artifact@v2
         with:
           name: request-log-tier3
           path: Rate-Limit/request_log_tier3.txt
