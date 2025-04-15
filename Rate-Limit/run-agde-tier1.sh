@@ -48,7 +48,7 @@ process_request() {
     echo "------------------------------"
   } >> "$LOG_FILE"
 
-  # Incrementar contadores
+  # Incrementar contadores (en archivo temporal para procesos concurrentes)
   if [[ "$status_code" == "200" ]]; then
     echo "200" >> .status_temp
   elif [[ "$status_code" == "429" ]]; then
@@ -68,6 +68,9 @@ for ((i=1; i<=TOTAL_REQUESTS; i++)); do
     wait
   fi
 done
+
+# Esperar a que todos los procesos en paralelo terminen antes de contar los resultados
+wait
 
 # Contar resultados
 COUNTER_200=$(grep -c '^200$' .status_temp)

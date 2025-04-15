@@ -4,7 +4,7 @@ API_KEY=a2ZubG9yMHZzdWM0cHB1eDk1cnptOk5kTGY1Y0dSOFhmZFlJRE5oZGRyVVdVT2ZJMk94TlR5
 PARALLEL_REQUESTS=30
 TOTAL_REQUESTS=120
 
-LOG_FILE="request_log.txt"
+LOG_FILE="request_log_tier2.txt"
 COUNTER_200=0
 COUNTER_429=0
 COUNTER_OTHER=0
@@ -46,14 +46,18 @@ process_request() {
 # Eliminar archivo temporal de contadores si existe
 rm -f .status_temp
 
+# Ejecutar las solicitudes en paralelo
 for ((i=1; i<=TOTAL_REQUESTS; i++)); do
   process_request $i &
   if (( i % PARALLEL_REQUESTS == 0 )) || (( i == TOTAL_REQUESTS )); then
-    wait
+    wait # Esperar que todos los procesos en paralelo finalicen
   fi
 done
 
-# Procesar resultados
+# Procesar resultados (esperar a que todos los procesos terminen antes de contar)
+wait
+
+# Contar las respuestas de 200, 429 y otros
 COUNTER_200=$(grep -c '^200$' .status_temp)
 COUNTER_429=$(grep -c '^429$' .status_temp)
 COUNTER_OTHER=$(grep -c '^OTHER$' .status_temp)

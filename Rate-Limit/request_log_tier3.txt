@@ -1,0 +1,727 @@
+Starting request log - Tue Apr 15 13:25:24 -05 2025
+Request 31:
+Status Code: 500
+Elapsed Time: 13.0s
+------------------------------
+Request 5:
+Status Code: 200
+Elapsed Time: 28.0s
+------------------------------
+Request 6:
+Status Code: 200
+Elapsed Time: 29.0s
+------------------------------
+Request 15:
+Status Code: 200
+Elapsed Time: 32.0s
+------------------------------
+Request 24:
+Status Code: 200
+Elapsed Time: 36.0s
+------------------------------
+Request 21:
+Status Code: 200
+Elapsed Time: 36.0s
+------------------------------
+Request 44:
+Status Code: 200
+Elapsed Time: 36.0s
+------------------------------
+Request 51:
+Status Code: 200
+Elapsed Time: 36.0s
+------------------------------
+Request 7:
+Status Code: 200
+Elapsed Time: 37.0s
+------------------------------
+Request 12:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 11:
+Status Code: 200
+Elapsed Time: 39.0s
+------------------------------
+Request 50:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 3:
+Request 39:
+Status Code: 200
+Status Code: 200
+Elapsed Time: 41.0s
+Elapsed Time: 41.0s
+------------------------------
+------------------------------
+Request 54:
+Status Code: 200
+Elapsed Time: 41.0s
+------------------------------
+Request 18:
+Status Code: 200
+Elapsed Time: 41.0s
+------------------------------
+Request 1:
+Status Code: 200
+Elapsed Time: 41.0s
+------------------------------
+Request 52:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 56:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 13:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 20:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 17:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 47:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 30:
+Request 10:
+Status Code: 200
+Status Code: 200
+Elapsed Time: 45.0s
+Elapsed Time: 45.0s
+------------------------------
+------------------------------
+Request 57:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 2:
+Request 35:
+Status Code: 200
+Status Code: 200
+Elapsed Time: 46.0s
+Elapsed Time: 46.0s
+------------------------------
+------------------------------
+Request 28:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 23:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 32:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 60:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 9:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 16:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 22:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 58:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 49:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 46:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 42:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 25:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 4:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 53:
+Status Code: 200
+Elapsed Time: 49.0s
+------------------------------
+Request 40:
+Status Code: 200
+Elapsed Time: 50.0s
+------------------------------
+Request 26:
+Status Code: 200
+Elapsed Time: 50.0s
+------------------------------
+Request 19:
+Status Code: 200
+Elapsed Time: 50.0s
+------------------------------
+Request 41:
+Status Code: 200
+Elapsed Time: 50.0s
+------------------------------
+Request 55:
+Status Code: 200
+Elapsed Time: 50.0s
+------------------------------
+Request 37:
+Status Code: 200
+Elapsed Time: 51.0s
+------------------------------
+Request 14:
+Status Code: 200
+Elapsed Time: 53.0s
+------------------------------
+Request 29:
+Status Code: 200
+Elapsed Time: 54.0s
+------------------------------
+Request 8:
+Status Code: 200
+Elapsed Time: 54.0s
+------------------------------
+Request 43:
+Status Code: 200
+Elapsed Time: 55.0s
+------------------------------
+Request 48:
+Status Code: 200
+Elapsed Time: 55.0s
+------------------------------
+Request 36:
+Status Code: 200
+Elapsed Time: 55.0s
+------------------------------
+Request 33:
+Status Code: 200
+Elapsed Time: 55.0s
+------------------------------
+Request 45:
+Status Code: 200
+Elapsed Time: 56.0s
+------------------------------
+Request 38:
+Status Code: 200
+Elapsed Time: 57.0s
+------------------------------
+Request 27:
+Status Code: 200
+Elapsed Time: 58.0s
+------------------------------
+Request 59:
+Status Code: 200
+Elapsed Time: 67.0s
+------------------------------
+Request 34:
+Status Code: 200
+Elapsed Time: 69.0s
+------------------------------
+Request 115:
+Status Code: 200
+Elapsed Time: 35.0s
+------------------------------
+Request 102:
+Status Code: 200
+Elapsed Time: 37.0s
+------------------------------
+Request 116:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 105:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 81:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 72:
+Status Code: 200
+Elapsed Time: 39.0s
+------------------------------
+Request 85:
+Status Code: 200
+Elapsed Time: 39.0s
+------------------------------
+Request 117:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 92:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 89:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 103:
+Status Code: 200
+Elapsed Time: 41.0s
+------------------------------
+Request 75:
+Status Code: 200
+Elapsed Time: 41.0s
+------------------------------
+Request 113:
+Status Code: 200
+Elapsed Time: 41.0s
+------------------------------
+Request 107:
+Status Code: 200
+Elapsed Time: 41.0s
+------------------------------
+Request 90:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 99:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 83:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 82:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 68:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 70:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 87:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 77:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 62:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 63:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 74:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 104:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 79:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 114:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 110:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 119:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 120:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 86:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 97:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 61:
+Request 109:
+Request 71:
+Status Code: 200
+Status Code: 200
+Status Code: 200
+Elapsed Time: 46.0s
+Elapsed Time: 46.0s
+------------------------------
+------------------------------
+Elapsed Time: 46.0s
+------------------------------
+Request 106:
+Status Code: 200
+Elapsed Time: 46.0s
+------------------------------
+Request 112:
+Status Code: 200
+Elapsed Time: 46.0s
+------------------------------
+Request 80:
+Request 108:
+Status Code: 200
+Status Code: 200
+Elapsed Time: 46.0s
+Elapsed Time: 46.0s
+------------------------------
+------------------------------
+Request 95:
+Status Code: 200
+Elapsed Time: 46.0s
+------------------------------
+Request 65:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 98:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 93:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 91:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 101:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 100:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 94:
+Status Code: 200
+Elapsed Time: 49.0s
+------------------------------
+Request 111:
+Status Code: 200
+Elapsed Time: 49.0s
+------------------------------
+Request 96:
+Status Code: 200
+Elapsed Time: 51.0s
+------------------------------
+Request 66:
+Status Code: 200
+Elapsed Time: 51.0s
+------------------------------
+Request 64:
+Status Code: 200
+Elapsed Time: 51.0s
+------------------------------
+Request 67:
+Status Code: 200
+Elapsed Time: 52.0s
+------------------------------
+Request 69:
+Status Code: 200
+Elapsed Time: 52.0s
+------------------------------
+Request 88:
+Status Code: 200
+Elapsed Time: 55.0s
+------------------------------
+Request 76:
+Status Code: 200
+Elapsed Time: 55.0s
+------------------------------
+Request 73:
+Status Code: 200
+Elapsed Time: 61.0s
+------------------------------
+Request 118:
+Status Code: 200
+Elapsed Time: 113.0s
+------------------------------
+Request 84:
+Status Code: 200
+Elapsed Time: 124.0s
+------------------------------
+Request 78:
+Status Code: 200
+Elapsed Time: 126.0s
+------------------------------
+Request 144:
+Status Code: 200
+Elapsed Time: 31.0s
+------------------------------
+Request 146:
+Status Code: 200
+Elapsed Time: 32.0s
+------------------------------
+Request 165:
+Status Code: 200
+Elapsed Time: 32.0s
+------------------------------
+Request 173:
+Status Code: 200
+Elapsed Time: 33.0s
+------------------------------
+Request 174:
+Status Code: 200
+Elapsed Time: 33.0s
+------------------------------
+Request 137:
+Status Code: 200
+Elapsed Time: 33.0s
+------------------------------
+Request 164:
+Status Code: 200
+Elapsed Time: 34.0s
+------------------------------
+Request 159:
+Status Code: 200
+Elapsed Time: 34.0s
+------------------------------
+Request 126:
+Status Code: 200
+Elapsed Time: 34.0s
+------------------------------
+Request 145:
+Status Code: 200
+Elapsed Time: 34.0s
+------------------------------
+Request 141:
+Status Code: 200
+Elapsed Time: 35.0s
+------------------------------
+Request 156:
+Status Code: 200
+Elapsed Time: 35.0s
+------------------------------
+Request 161:
+Request 180:
+Status Code: 200
+Status Code: 200
+Elapsed Time: 36.0s
+Elapsed Time: 36.0s
+------------------------------
+------------------------------
+Request 171:
+Status Code: 200
+Elapsed Time: 36.0s
+------------------------------
+Request 148:
+Status Code: 200
+Elapsed Time: 37.0s
+------------------------------
+Request 127:
+Status Code: 200
+Elapsed Time: 37.0s
+------------------------------
+Request 150:
+Status Code: 200
+Elapsed Time: 37.0s
+------------------------------
+Request 123:
+Status Code: 200
+Elapsed Time: 37.0s
+------------------------------
+Request 157:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 166:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 175:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 170:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 142:
+Status Code: 200
+Elapsed Time: 38.0s
+------------------------------
+Request 140:
+Status Code: 200
+Elapsed Time: 39.0s
+------------------------------
+Request 147:
+Status Code: 200
+Elapsed Time: 39.0s
+------------------------------
+Request 136:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 172:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 143:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 152:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 168:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 151:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 122:
+Request 132:
+Status Code: 200
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Elapsed Time: 40.0s
+------------------------------
+Request 154:
+Status Code: 200
+Elapsed Time: 40.0s
+------------------------------
+Request 124:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 138:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 155:
+Status Code: 200
+Elapsed Time: 42.0s
+------------------------------
+Request 169:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 163:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 167:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 129:
+Status Code: 200
+Elapsed Time: 43.0s
+------------------------------
+Request 162:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 121:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 149:
+Status Code: 200
+Elapsed Time: 44.0s
+------------------------------
+Request 178:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 153:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 133:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 134:
+Status Code: 200
+Elapsed Time: 45.0s
+------------------------------
+Request 158:
+Status Code: 200
+Elapsed Time: 46.0s
+------------------------------
+Request 131:
+Status Code: 200
+Elapsed Time: 47.0s
+------------------------------
+Request 160:
+Status Code: 200
+Elapsed Time: 48.0s
+------------------------------
+Request 125:
+Status Code: 200
+Elapsed Time: 49.0s
+------------------------------
+Request 179:
+Status Code: 200
+Elapsed Time: 49.0s
+------------------------------
+Request 177:
+Status Code: 200
+Elapsed Time: 50.0s
+------------------------------
+Request 128:
+Status Code: 200
+Elapsed Time: 50.0s
+------------------------------
+Request 130:
+Status Code: 200
+Elapsed Time: 52.0s
+------------------------------
+Request 176:
+Request 139:
+Status Code: 200
+Status Code: 200
+Elapsed Time: 54.0s
+Elapsed Time: 54.0s
+------------------------------
+------------------------------
+Request 135:
+Status Code: 200
+Elapsed Time: 59.0s
+------------------------------
+
+===== SUMMARY =====
+Total 200 responses: 179
+Total 429 responses: 0
+Total other responses: 1
+===================
