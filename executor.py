@@ -65,11 +65,43 @@ if selected_folder == "VA_playwright":
             except ValueError:
                 print("❌ Please enter a valid number or 'A' for all.")
 
-print(f"📂 Executing: {folder}\n")
+   # Elegir entorno
+    print("-----------------------------")
+    print("## ENVIRONMENTS ##")
+    print("1 Staging")
+    print("2 Production")
+    env_selection = None
+    while env_selection not in ('1', '2'):
+        env_selection = input("Select environment (1=Staging, 2=Production): ").strip()
 
-# Run Playwright with real-time logs
-if selected_folder == "VA_playwright":
-    if test == 'all':
+    url = "https://va.staging.landing.ai/" if env_selection == '1' else "https://va.landing.ai/"
+    print(f"\n🌐 Environment set to: {url}")
+
+    # Modificar solo la variable URL en env.py
+    env_file_path = os.path.join("VA_playwright", "env.py")
+    lines = []
+    found_url = False
+
+    if os.path.exists(env_file_path):
+        with open(env_file_path, "r") as f:
+            for line in f:
+                if line.strip().startswith("URL ="):
+                    lines.append(f'URL = "{url}"\n')
+                    found_url = True
+                else:
+                    lines.append(line)
+
+    if not found_url:
+        lines.append(f'URL = "{url}"\n')
+
+    with open(env_file_path, "w") as f:
+        f.writelines(lines)
+
+    print(f"\n📂 Executing: {folder}\n")
+
+# Run Playwright or VA tests with pytest
+if selected_folder in ["VA", "VA_playwright"]:
+    if selected_folder == "VA_playwright" and test == 'all':
         result = pytest.main(['-s', '-n', 'auto', '--continue-on-collection-errors', '--maxfail=999', selected_folder])
     else:
         result = pytest.main(['-s', folder, '--continue-on-collection-errors', '--maxfail=999'])
@@ -82,5 +114,4 @@ if selected_folder == "VA_playwright":
 else:
     with open(folder) as f:
         exec(f.read())
-
 

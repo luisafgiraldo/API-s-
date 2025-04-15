@@ -1,199 +1,223 @@
+import pytest
 import utils as u
 import os
 import time
 from Florencev2QA import create
 
-URL_BASE = "https://api.va.staging.landing.ai/v1/tools"
 IMAGES_PATH_BASE = os.path.join("VA", "Images")
-API_KEY = "eTdiN3pjM2dpbWlhbnIwMzJlcDdvOnFoTlZZNDIwTk9ORDV4U3M5UVA3R0JZN1VrS3JhVXV0"
 
-start_time = time.time()
+# URL_BASE = "https://api.va.staging.landing.ai/v1/tools"
+# URL_BASE = "https://api.va.landing.ai/v1/tools"
 
-def Owlv2():
+# API_KEY = "eTdiN3pjM2dpbWlhbnIwMzJlcDdvOnFoTlZZNDIwTk9ORDV4U3M5UVA3R0JZN1VrS3JhVXV0"
+# API_KEY = "dmd1bDcxaWJ1MDU3Z3IxczU5cjUyOjlsZDNuczR0WGdKN292S0lDbXNTVkx2bE9mS2NzNlRT"
+
+CONFIGS = [
+    {
+        "URL_BASE": "https://api.va.staging.landing.ai/v1/tools",
+        "API_KEY": "eTdiN3pjM2dpbWlhbnIwMzJlcDdvOnFoTlZZNDIwTk9ORDV4U3M5UVA3R0JZN1VrS3JhVXV0"
+    },
+    {
+        "URL_BASE": "https://api.va.landing.ai/v1/tools",
+        "API_KEY": "dmd1bDcxaWJ1MDU3Z3IxczU5cjUyOjlsZDNuczR0WGdKN292S0lDbXNTVkx2bE9mS2NzNlRT"
+    }
+]
+
+# 🔁 Interactive user input
+user_choice = input("Which environment do you want to use? (1 = Staging, 2 = Production, 3 = Both): ").strip()
+
+if user_choice == "1":
+    CONFIGS = [CONFIGS[0]]
+elif user_choice == "2":
+    CONFIGS = [CONFIGS[1]]
+# If "3", leave CONFIGS unchanged (use both)
+
+print(f"✅ Selected configuration(s): {[config['URL_BASE'] for config in CONFIGS]}")
+
+@pytest.fixture(scope="module", autouse=True)
+def timer():
+    start_time = time.time()
+    yield
+    end_time = time.time()
+    total_time_minutes = (end_time - start_time) / 60
+    print(f"Total execution time: {total_time_minutes:.2f} minutes")
+
+@pytest.mark.parametrize("config", CONFIGS)
+def test_owlv2(config):
+
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+
+    import os
+    print("Current working directory:", os.getcwd())
     import Owlv2
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "OWLv2 Image")
+    print(f"IMAGE_DIR: {IMAGE_DIR}")  # Verifica la ruta
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
+    print(f"IMAGE_PATH: {IMAGE_PATH}")  # Verifica si encuentra un archivo
+    assert IMAGE_PATH is not None, "No se encontró una imagen en el directorio"
+
     URL = f"{URL_BASE}/owlv2"
     PROMPTS = "Detect animals"
+    result = Owlv2.create(URL, IMAGE_PATH, PROMPTS, API_KEY)
+    assert result is not None, "Owlv2 result is None"
 
-    Owlv2 = Owlv2.create(URL, IMAGE_PATH, PROMPTS, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_countgd(config):
 
-Owlv2()
-
-
-def Countgd():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Countgd
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Countgd Counting")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/countgd"
     PROMPTS = "Dogs"
+    result = Countgd.create(URL, IMAGE_PATH, PROMPTS, API_KEY)
+    assert result is not None, "Countgd result is None"
 
-    Countgd = Countgd.create(URL, IMAGE_PATH, PROMPTS, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_florencev2_roberta(config):
 
-
-Countgd()
-
-
-def Florencev2_Roberta():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Florencev2
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Florence-2 Roberta Vqa")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/florence2"
     TASK = "<CAPTION>"
+    result = Florencev2.create(URL, IMAGE_PATH, TASK, API_KEY)
+    assert result is not None, "Florencev2 Roberta result is None"
 
-    Florencev2 = Florencev2.create(URL, IMAGE_PATH, TASK, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_florencev2_ocr(config):
 
-
-Florencev2_Roberta()
-
-
-def Florencev2_OCR():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Florencev2
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Florence2 OCR")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/florence2"
     TASK = "<OCR>"
+    result = Florencev2.create(URL, IMAGE_PATH, TASK, API_KEY)
+    assert result is not None, "Florencev2 OCR result is None"
 
-    Florencev2 = Florencev2.create(URL, IMAGE_PATH, TASK, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_florencev2qa(config):
 
-
-Florencev2_OCR()
-
-
-def Florencev2QA():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Florencev2QA
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "IXC25 Image VQA")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/florence2-qa"
     QUESTION = "What color is the car?"
+    result = Florencev2QA.create(URL, IMAGE_PATH, QUESTION, API_KEY)
+    assert result is not None, "Florencev2QA result is None"
 
-    Florencev2QA = Florencev2QA.create(URL, IMAGE_PATH, QUESTION, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_depth_anything_v2(config):
 
-
-Florencev2QA()
-
-
-def Depth_Anything_V2():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Depth_Anything_V2
-    import numpy as np
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Depth Anything V2")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/depth-anything-v2"
+    result = Depth_Anything_V2.create(URL, IMAGE_PATH, API_KEY)
+    assert result is not None, "Depth Anything V2 result is None"
 
-    Depth_Anything_V2 = Depth_Anything_V2.create(URL, IMAGE_PATH, API_KEY)
-    print(Depth_Anything_V2)
+# def test_text_to_od(config):
 
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
+#     import Text_To_Od
+#     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "OWLv2 Video")
+#     VIDEO_PATH = u.first_file_finder(IMAGE_DIR)
+#     URL = f"{URL_BASE}/text-to-object-detection"
+#     PROMPTS = "elephants"
+#     result = Text_To_Od.create(URL, VIDEO_PATH, PROMPTS, API_KEY)
+#     assert result is not None, "Text To Od result is None"
 
-Depth_Anything_V2()
+@pytest.mark.parametrize("config", CONFIGS)
+def test_nsfw_classification(config):
 
-
-def Text_To_Od():
-
-    import Text_To_Od
-
-    IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "OWLv2 Video")
-    VIDEO_PATH = u.first_file_finder(IMAGE_DIR)
-    URL = f"{URL_BASE}/text-to-object-detection"
-    # PROMPTS = "Detect elephants, giraffes, zebras, and other animals in the wildlife video, providing object labels, confidence scores, and bounding box coordinates"
-    PROMPTS = "elephants"
-    Text_To_Od = Text_To_Od.create(URL, VIDEO_PATH, PROMPTS, API_KEY)
-    print(Text_To_Od)
-
-
-#Text_To_Od()
-
-
-def nsfw_classification():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import nsfw_classification
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "ViT NSFW Classification")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/nsfw-classification"
+    result = nsfw_classification.create(URL, IMAGE_PATH, API_KEY)
+    assert result is not None, "NSFW Classification result is None"
 
-    nsfw_classification = nsfw_classification.create(URL, IMAGE_PATH, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_wsi_embedding(config):
 
-
-nsfw_classification()
-
-
-def Wsi_Embedding():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Wsi_Embedding
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Tool Wsi Embedding")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/wsi-embedding"
+    result = Wsi_Embedding.create(URL, IMAGE_PATH, API_KEY)
+    assert result is not None, "WSI Embedding result is None"
 
-    Wsi_Embedding = Wsi_Embedding.create(URL, IMAGE_PATH, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_qr_reader(config):
 
-
-Wsi_Embedding()
-
-
-def qr_reader():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import qr_reader
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Tool Qr Reader")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/qr-reader"
+    result = qr_reader.create(URL, IMAGE_PATH, API_KEY)
+    assert result is not None, "QR Reader result is None"
 
-    qr_reader = qr_reader.create(URL, IMAGE_PATH, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_loca(config):
 
-
-qr_reader()
-
-
-def loca():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import loca
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Loca Zero Shot Counting")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/loca"
+    result = loca.create(URL, IMAGE_PATH, API_KEY)
+    assert result is not None, "Loca result is None"
 
-    loca = loca.create(URL, IMAGE_PATH, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_pose_detection(config):
 
-
-loca()
-
-
-def Pose_Detection():
-
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Pose_Detection
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Pose Detection")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/pose-detector"
+    result = Pose_Detection.create(URL, IMAGE_PATH, API_KEY)
+    assert result is not None, "Pose Detection result is None"
 
-    Pose_Detection = Pose_Detection.create(URL, IMAGE_PATH, API_KEY)
+@pytest.mark.parametrize("config", CONFIGS)
+def test_barcode_reader(config):
 
-
-Pose_Detection()
-
-
-def Barcode_Reader():
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
     import Barcode_Reader
-
     IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Barcode Reader")
     IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
     URL = f"{URL_BASE}/barcode-reader"
-
-    Barcode_Reader = Barcode_Reader.create(URL, IMAGE_PATH, API_KEY)
-
-Barcode_Reader()
-
-end_time = time.time()
-total_time_minutes = (end_time - start_time) / 60
-print(f"Total execution time: {total_time_minutes:.2f} minutes")
+    result = Barcode_Reader.create(URL, IMAGE_PATH, API_KEY)
+    assert result is not None, "Barcode Reader result is None"

@@ -12,7 +12,7 @@ print(fecha_actual)
 projectType = {1: "classification", 2: "segmentation", 3: "object-detection"}
 ################### PARAMETERS TO CHANGE ###########################
 # api_key = "land_sk_VtHE8Gx36OvgODIYxyl0cesFMhiZUJEvtEc3YI1Dk1C5tf76ku"  # Enterprise-Org
-api_key = "land_sk_GPoLEAN9CThf44guBoAip85Vodx837XEKKGxCLQNuUNn60HQRz"
+api_key = "land_sk_GPoLEAN9CThf44guBoAip85Vodx837XEKKGxCLQNuUNn60HQRz"   # Enterprise-Org
 url_base = "https://api.staging.landing.ai/v1"
 # %%
 

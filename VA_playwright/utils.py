@@ -10,7 +10,7 @@ import pyautogui
 def browser():
     screen_width, screen_height = pyautogui.size()  # Get screen size
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context(viewport={"width": screen_width, "height": screen_height})
         yield context
         browser.close()
@@ -48,9 +48,16 @@ def navigate_to_explore_apis(page):
 
 def navigate_tool(page, tool):
     """Navigates to the 'Agentic Object Detection' option."""
-    page.wait_for_selector(f"p:text('{tool}')", timeout=10000)
-    page.locator(f"p:text('{tool}')").click()
+# Espera el div con el texto del nombre del tool (ya no es <p>, ahora es <div class="text-2xl font-semibold">)
+    page.wait_for_selector(f"div.text-2xl.font-semibold:text('{tool}')", timeout=10000)
+
+    # Hace clic sobre la tarjeta completa que contiene ese título
+    tool_card = page.locator(f"div:has(div.text-2xl.font-semibold:text('{tool}'))").first
+    tool_card.click()
+
     print(f"✅ Clicked on '{tool}'")
+
+    # Confirmamos que el nombre aparece en la vista que carga
     page.wait_for_selector(f"div:text('{tool}')", timeout=10000)
     print(f"✅ Successful validation: '{tool}' is visible")
 

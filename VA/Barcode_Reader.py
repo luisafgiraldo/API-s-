@@ -28,6 +28,7 @@ def create(url: str, image_path: str, api_key: str):
                 + "============================== 1 passed Barcode_Reader.py =============================="
                 + "\x1b[0m"
             )
+            return response_data
         else:
             print(f"Error {response.status_code}: {response.text}")
             print(

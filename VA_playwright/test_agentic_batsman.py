@@ -12,7 +12,6 @@ def test_agentic_object_detection(browser):
     page = u.login(browser)
 
     # Navigate to the API
-    u.navigate_to_explore_apis(page)
     u.navigate_tool(page, TOOL_NAME)
 
     # Iterate over each test element

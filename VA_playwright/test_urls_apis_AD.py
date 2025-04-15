@@ -11,12 +11,6 @@ TOOLS = {
     "Agentic Document Extraction": "agentic-document-analysis",
 }
 
-@pytest.fixture(scope="module")
-def logged_in_page(browser):
-    """Login once and return the page instance."""
-    page = u.login(browser)
-    return page
-
 def test_validate_all_tools(browser):
     """Iterates over all tools, validates 'View API' presence, verifies the URL, and returns to the tools list."""
 
@@ -51,8 +45,31 @@ def test_validate_all_tools(browser):
         if tool_name == "Agentic Object Detection":
             view_api_button = page.locator("button[data-sentry-element='Button'][class*='bg-primary']")
         elif tool_name == "Agentic Document Extraction":
+            print("🔍 Esperando botón 'View API' en Agentic Document Extraction...")
+
+            # Espera hasta 15s por botones visibles con el texto
             view_api_buttons = page.locator("button:has-text('View API')")
-            print("🔍 Botones encontrados:", view_api_buttons.count())
+            page.wait_for_timeout(3000)  # Espera extra por si está cargando lento
+
+            count = view_api_buttons.count()
+            print(f"🔍 Total 'View API' encontrados: {count}")
+
+            found = False
+            for i in range(count):
+                btn = view_api_buttons.nth(i)
+                try:
+                    btn.scroll_into_view_if_needed()
+                    if btn.is_visible():
+                        view_api_button = btn
+                        found = True
+                        print("✅ Botón 'View API' visible encontrado")
+                        break
+                except Exception as e:
+                    print(f"⚠️ Error revisando botón {i}: {e}")
+
+            assert found, f"❌ 'View API' button not found for {tool_name}"
+
+
         else:
             raise ValueError(f"❌ No selector defined for tool: {tool_name}")
 
