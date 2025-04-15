@@ -1,0 +1,67 @@
+name: run-rate-limit-tests
+
+on:
+  workflow_dispatch:  # Ejecutar solo manualmente
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+jobs:
+  run-tier1:
+    name: Run AGDE Tier 1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Give execution permissions
+        run: chmod +x Rate-Limit/run-agde-tier1.sh
+
+      - name: Run Tier 1 script
+        run: ./Rate-Limit/run-agde-tier1.sh
+
+      - name: Upload Tier 1 log
+        uses: actions/upload-artifact@v2
+        with:
+          name: request-log-tier1
+          path: Rate-Limit/request_log_tier1.txt
+
+  run-tier2:
+    name: Run AGDE Tier 2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Give execution permissions
+        run: chmod +x Rate-Limit/run-agde-tier2.sh
+
+      - name: Run Tier 2 script
+        run: ./Rate-Limit/run-agde-tier2.sh
+
+      - name: Upload Tier 2 log
+        uses: actions/upload-artifact@v2
+        with:
+          name: request-log-tier2
+          path: Rate-Limit/request_log_tier2.txt
+
+  run-tier3:
+    name: Run AGDE Tier 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Give execution permissions
+        run: chmod +x Rate-Limit/run-agde-tier3.sh
+
+      - name: Run Tier 3 script
+        run: ./Rate-Limit/run-agde-tier3.sh
+
+      - name: Upload Tier 3 log
+        uses: actions/upload-artifact@v2
+        with:
+          name: request-log-tier3
+          path: Rate-Limit/request_log_tier3.txt
