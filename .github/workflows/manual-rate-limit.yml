@@ -11,13 +11,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Make script executable
+      - name: Give execution permissions
         run: chmod +x Rate-Limit/run-agde-tier1.sh
 
-      - name: Run test
+      - name: Run Tier 1 script
         run: ./Rate-Limit/run-agde-tier1.sh
 
-      - name: Upload log
+      - name: Upload Tier 1 log
         uses: actions/upload-artifact@v4
         with:
           name: request-log-tier1
@@ -30,13 +30,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Make script executable
+      - name: Give execution permissions
         run: chmod +x Rate-Limit/run-agde-tier2.sh
 
-      - name: Run test
+      - name: Run Tier 2 script
         run: ./Rate-Limit/run-agde-tier2.sh
 
-      - name: Upload log
+      - name: Upload Tier 2 log
         uses: actions/upload-artifact@v4
         with:
           name: request-log-tier2
@@ -49,17 +49,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Make script executable
+      - name: Give execution permissions
         run: chmod +x Rate-Limit/run-agde-tier3.sh
 
-      - name: Run test
+      - name: Run Tier 3 script
         run: ./Rate-Limit/run-agde-tier3.sh
 
-      - name: Upload log
+      - name: Upload Tier 3 log
         uses: actions/upload-artifact@v4
         with:
           name: request-log-tier3
           path: Rate-Limit/request_log_tier3.rtf
-
-
-
