@@ -1,21 +1,25 @@
-name: Manual Run Rate-Limit Tests
+name: run-rate-limit-tests
 
 on:
-  workflow_dispatch:  # Esto permite correrlo manualmente desde GitHub UI
+  workflow_dispatch:  # Esto hace que el workflow se ejecute solo manualmente
 
 jobs:
   run-rate-limit-tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        script: [run-agde-tier1.sh, run-agde-tier2.sh, run-agde-tier3.sh]
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Make scripts executable
-        run: chmod +x Rate-Limit/${{ matrix.script }}
+      - name: Make script executable
+        run: chmod +x Rate-Limit/run-agde-tier1.sh
 
-      - name: Run ${{ matrix.script }}
-        run: ./Rate-Limit/${{ matrix.script }}
+      - name: Run rate-limit test script
+        run: ./Rate-Limit/run-agde-tier1.sh
+
+      - name: Upload log as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: request-log
+          path: Rate-Limit/request_log.txt  # Asegúrate de que el archivo esté en esa ruta
+
