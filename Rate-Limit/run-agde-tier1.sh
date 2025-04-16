@@ -9,11 +9,6 @@ COUNTER_200=0
 COUNTER_429=0
 COUNTER_OTHER=0
 
-# Verificar existencia de la imagen
-if [[ ! -f "./simple-table.png" ]]; then
-  echo "❌ Imagen simple-table.png no encontrada. Abortando script." > "$LOG_FILE"
-  exit 1
-fi
 
 # Reiniciar log si existe
 echo "📅 Starting request log - $(date)" > "$LOG_FILE"
@@ -28,8 +23,7 @@ process_request() {
     -H "Authorization: Basic $API_KEY" \
     -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
-    -F 'image=@./simple-table.png;' \
-    -s -w "\nSTATUS_CODE:%{http_code}" 2>> "$LOG_FILE")
+    -F 'image=@./Rate-Limit/simple-table.png;' -s -o /dev/null -w "%{http_code}")
 
   end_time=$(date +%s.%N)
   elapsed_time=$(echo "$end_time - $start_time" | bc)
