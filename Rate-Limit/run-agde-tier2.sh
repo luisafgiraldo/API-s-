@@ -20,7 +20,7 @@ process_request() {
     -H "Authorization: Basic $API_KEY" \
     -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
-    -F 'image=@./simple-table.png;' -s -o /dev/null -w "%{http_code}")
+    -F 'image=@./Rate-Limit/simple-table.png;' -s -o /dev/null -w "%{http_code}")
 
   end_time=$(date +%s.%N)
   elapsed_time=$(echo "$end_time - $start_time" | bc)
