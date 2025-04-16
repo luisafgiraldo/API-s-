@@ -22,6 +22,9 @@ jobs:
       - name: Run Tier 1 script
         run: ./Rate-Limit/run-agde-tier1.sh
 
+      - name: Mostrar contenido del log Tier 1
+        run: cat Rate-Limit/request_log_tier1.txt || echo "❌ El archivo no existe o está vacío"
+
       - name: Upload Tier 1 log
         uses: actions/upload-artifact@v4
         with:
@@ -41,6 +44,9 @@ jobs:
       - name: Run Tier 2 script
         run: ./Rate-Limit/run-agde-tier2.sh
 
+      - name: Mostrar contenido del log Tier 2
+        run: cat Rate-Limit/request_log_tier2.txt || echo "❌ El archivo no existe o está vacío"
+
       - name: Upload Tier 2 log
         uses: actions/upload-artifact@v4
         with:
@@ -59,6 +65,9 @@ jobs:
 
       - name: Run Tier 3 script
         run: ./Rate-Limit/run-agde-tier3.sh
+
+      - name: Mostrar contenido del log Tier 3
+        run: cat Rate-Limit/request_log_tier3.txt || echo "❌ El archivo no existe o está vacío"
 
       - name: Upload Tier 3 log
         uses: actions/upload-artifact@v4
