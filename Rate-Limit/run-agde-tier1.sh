@@ -9,16 +9,14 @@ COUNTER_200=0
 COUNTER_429=0
 COUNTER_OTHER=0
 
-
 # Reiniciar log si existe
-echo "📅 Starting request log - $(date)" > "$LOG_FILE"
+echo "Starting request log - $(date)" > "$LOG_FILE"
 
 process_request() {
   local i=$1
   start_time=$(date +%s.%N)
 
-  # Ejecutar request
-  response=$(curl -X 'POST' \
+  status_code=$(curl -X 'POST' \
     'https://api.va.staging.landing.ai/v1/tools/agentic-document-analysis' \
     -H "Authorization: Basic $API_KEY" \
     -H 'accept: application/json' \
@@ -28,21 +26,15 @@ process_request() {
   end_time=$(date +%s.%N)
   elapsed_time=$(echo "$end_time - $start_time" | bc)
 
-  # Separar cuerpo y status code
-  status_code=$(echo "$response" | grep "STATUS_CODE:" | cut -d':' -f2)
-  body=$(echo "$response" | sed '/STATUS_CODE:/d')
-
-  # Log detallado
+  # Log por cada request
   {
-    echo "[$(date)] Request $i:"
+    echo "Request $i:"
     echo "Status Code: $status_code"
     echo "Elapsed Time: ${elapsed_time}s"
-    echo "Response Body:"
-    echo "$body"
     echo "------------------------------"
   } >> "$LOG_FILE"
 
-  # Incrementar contadores (en archivo temporal para procesos concurrentes)
+  # Guardar status en archivo temporal
   if [[ "$status_code" == "200" ]]; then
     echo "200" >> .status_temp
   elif [[ "$status_code" == "429" ]]; then
@@ -55,23 +47,23 @@ process_request() {
 # Eliminar archivo temporal de contadores si existe
 rm -f .status_temp
 
-# Ejecutar en paralelo
+# Ejecutar las solicitudes en paralelo
 for ((i=1; i<=TOTAL_REQUESTS; i++)); do
   process_request $i &
   if (( i % PARALLEL_REQUESTS == 0 )) || (( i == TOTAL_REQUESTS )); then
-    wait
+    wait # Esperar que todos los procesos en paralelo finalicen
   fi
 done
 
-# Esperar a que todos los procesos en paralelo terminen antes de contar los resultados
+# Procesar resultados (esperar a que todos los procesos terminen antes de contar)
 wait
 
-# Contar resultados
+# Contar las respuestas
 COUNTER_200=$(grep -c '^200$' .status_temp)
 COUNTER_429=$(grep -c '^429$' .status_temp)
 COUNTER_OTHER=$(grep -c '^OTHER$' .status_temp)
 
-# Resumen final
+# Agregar resumen al final del log
 {
   echo ""
   echo "===== SUMMARY ====="
