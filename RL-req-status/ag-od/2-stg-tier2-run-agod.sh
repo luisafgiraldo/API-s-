@@ -18,7 +18,7 @@ process_request() {
     -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
     -F "prompts=word" \
-    -F 'image=@./small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
+    -F 'image=@./RL-req-status/ag-od/small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
   echo "$response" >> "$STATUS_LOG"
   end_time=$(date +%s.%N)
   elapsed_time=$(echo "$end_time - $start_time" | bc)

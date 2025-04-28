@@ -17,7 +17,7 @@ process_request() {
     -H "Authorization: Basic $API_KEY" \
     -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
-    -F 'image=@./small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
+    -F 'image=@./RL-req-status/ag-de/small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
   echo "$response" >> "$STATUS_LOG"
   end_time=$(date +%s.%N)
   elapsed_time=$(echo "$end_time - $start_time" | bc)
