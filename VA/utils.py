@@ -49,7 +49,7 @@ def transformer(image_path):
 
 def first_file_finder(image_dir):
     """
-    Finds the first file in the specified directory.
+    Finds the first file in the specified directory, excluding hidden files.
 
     Args:
         image_dir (str): The path to the directory containing the files.
@@ -59,11 +59,11 @@ def first_file_finder(image_dir):
         None: If no files are found in the directory.
     """
     try:
-        # Get a list of all files in the directory
+        # Get a list of all files in the directory, excluding hidden files
         image_files = [
             f
             for f in os.listdir(image_dir)
-            if os.path.isfile(os.path.join(image_dir, f))
+            if os.path.isfile(os.path.join(image_dir, f)) and not f.startswith(".")
         ]
         if not image_files:
             print("No files found in the directory.")
@@ -75,6 +75,7 @@ def first_file_finder(image_dir):
     except FileNotFoundError:
         print(f"Directory not found: {image_dir}")
         return None
+
 
 
 def union_path(param1, param2):

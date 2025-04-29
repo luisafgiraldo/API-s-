@@ -9,14 +9,14 @@ start_time = time.time()
 fecha_actual = datetime.now().strftime("%Y-%m-%d")
 print(fecha_actual)
 
-projectType = {1: "classification", 2: "segmentation", 3: "object-detection"}
+projectType = {1: "classification", 2: "segmentation", 3: "object-detection", 4: "anomaly-detection"}
 ################### PARAMETERS TO CHANGE ###########################
 # api_key = "land_sk_VtHE8Gx36OvgODIYxyl0cesFMhiZUJEvtEc3YI1Dk1C5tf76ku"  # Enterprise-Org
 api_key = "land_sk_GPoLEAN9CThf44guBoAip85Vodx837XEKKGxCLQNuUNn60HQRz"   # Enterprise-Org
 url_base = "https://api.staging.landing.ai/v1"
 # %%
 
-for i in range(1, 4):
+for i in range(1, 5):
     ################### PARAMETERS TO CHANGE ###########################
     choose_project = projectType.get(i)
     name_proyecto = f"{choose_project}-{fecha_actual}"
@@ -35,15 +35,17 @@ for i in range(1, 4):
     # %%
     ######################## CREATE CLASSES ###############################
     import create_classes as cc
-
     url = f"{url}/{project_id}/classes"
-    if choose_project == "classification":
-        data = {"0": {"name": "Roll-Print"}, "1": {"name": "Side-line"}}
-    elif choose_project == "segmentation":
-        data = {"1": {"name": "Screw"}}
-    elif choose_project == "object-detection":
-        data = {"1": {"name": "Screw", "color": "#FFFF00"}}
-    cc.create(api_key=api_key, url=url, data=data)
+    if choose_project == "anomaly-detection":
+        True
+    else:
+        if choose_project == "classification":
+            data = {"0": {"name": "Roll-Print"}, "1": {"name": "Side-line"}}
+        elif choose_project == "segmentation":
+            data = {"1": {"name": "Screw"}}
+        elif choose_project == "object-detection":
+            data = {"1": {"name": "Screw", "color": "#FFFF00"}}
+        cc.create(api_key=api_key, url=url, data=data)
     # %%
     ####################### UPLOAD IMAGES #################################
     import upload_images as ui
@@ -90,21 +92,69 @@ for i in range(1, 4):
         }
 
         asp.auto_split(url, api_key, data)
+
+    elif choose_project == "anomaly-detection":
+        folders = ["clean", "contaminated"]
+        folder_to_label = {
+            "clean": "normal",
+            "contaminated": "abnormal",
+        }
+        path = os.path.join("Smoke-tests", "Images-ANOMALY")
+        ui.upload_anomaly_detection(api_key, url, folders, folder_to_label, path)
+        import auto_split as asp
+
+        url = url.replace("images", "autosplit")
+        data = {
+            "splitPercentages": {
+                "train": 65,
+                "dev": 25,
+                "test": 10,
+            },
+            "selectOption": "all-labeled",
+            "constraints": {
+                "train": {
+                    "labels": ["normal"]
+                },
+                "dev": {
+                    "labels": ["normal", "abnormal"]
+                },
+                "test": {
+                    "labels": ["normal", "abnormal"]
+                }
+            }
+        }
+
+        asp.auto_split(url, api_key, data)
+
     # %%
     ####################### TRAIN #########################################
     import train as t
 
     if choose_project == "classification":
         url = url.replace("images", "train")
+        training_id = t.training(api_key, url)
     elif choose_project == "object-detection":
         url = url.replace("autosplit", "train")
+        training_id = t.training(api_key, url)
     elif choose_project == "segmentation":
         url = url.replace("autosplit", "train")
-    training_id = t.training(api_key, url)
+        training_id = t.training(api_key, url)
+    elif choose_project == "anomaly-detection":
+        url = url.replace("autosplit", "train")
+        url = "https://app.staging.landing.ai/api/model/train"
+        json = {        
+        "experimentType": "anomaly-detection",
+        "projectId": project_id
+        }
+        training_id = t.training_anomaly(api_key, url, json)
+
     ###################### MONITOR TRAIN ##################################
     import monitor_train as mt
 
-    url = f"{url}/{training_id}/status"
+    if choose_project == 'anomaly-detection':
+        url = f"https://app.staging.landing.ai/api/registered_model/model_status?projectId={project_id}&modelId={training_id}&lastUpdatedAt=null"
+    else:
+        url = f"{url}/{training_id}/status"
     mt.monitoring(api_key, url)
     # %%
     ##################### MODELS #########################################
@@ -129,7 +179,10 @@ for i in range(1, 4):
         data = {"name": model.get("name"), "modelId": model.get("id")}
     elif choose_project == "segmentation":
         data = {"name": model.get("name"), "modelId": model.get("id")}
+    elif choose_project == "anomaly-detection":
+        data = {"name": model.get("name"), "modelId": model.get("id")}
     deployment = cd.create(api_key, url, data)
+    print(deployment)
     deployment = deployment["data"]
     predictionUrl = deployment["predictionUrl"]
     endpoint_id = deployment["id"]
@@ -144,6 +197,8 @@ for i in range(1, 4):
         folder = "Images"
     elif choose_project == "segmentation":
         folder = "Images"
+    elif choose_project == "anomaly-detection":
+        folder = "clean"
     image_dir = os.path.join(path, folder)
     p.predict(image_dir=image_dir, endpoint_id=endpoint_id, api_key=api_key)
 

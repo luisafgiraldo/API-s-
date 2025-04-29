@@ -1,11 +1,11 @@
 import requests
 
-url = "https://api.va.landing.ai/v1/tools/agentic-document-analysis"
+url = "https://api.va.staging.landing.ai/v1/tools/agentic-document-analysis"
 files = {
     "image": open("/Users/luisaaristizabal/Downloads/fam_tree1.jpg", "rb")
 }
 headers = {
-    "Authorization": "Basic OHZkbzZ1aWUxMjExMXIwaGg3NzE1OkxZZ0hURUttc2lUWTRXNlRPdjBnNlFtMjNoUmhMTEVI"
+    "Authorization": "Basic eTdiN3pjM2dpbWlhbnIwMzJlcDdvOnFoTlZZNDIwTk9ORDV4U3M5UVA3R0JZN1VrS3JhVXV0"
 }
 
 response = requests.post(url, files=files, headers=headers)

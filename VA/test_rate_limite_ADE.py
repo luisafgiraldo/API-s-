@@ -5,7 +5,7 @@ import time
 def send_request(results):
     url = "https://api.va.staging.landing.ai/v1/tools/florence2"
     files = {"image": open("/Users/luisaaristizabal/Downloads/fam_tree1.jpg", "rb")}
-    data = {"prompts": "detect dogs, people, cars and if there are trees identify them to me"}
+    data = {"prompts": "detect aircraft"}
     headers = {"Authorization": "Basic eTdiN3pjM2dpbWlhbnIwMzJlcDdvOnFoTlZZNDIwTk9ORDV4U3M5UVA3R0JZN1VrS3JhVXV0"}
     
     while True:

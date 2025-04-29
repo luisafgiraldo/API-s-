@@ -42,6 +42,39 @@ def timer():
     total_time_minutes = (end_time - start_time) / 60
     print(f"Total execution time: {total_time_minutes:.2f} minutes")
 
+import os
+import pytest
+import pandas as pd
+import Agentic_Object_Detection
+import utils as u  # Asumo que 'u' es tu módulo utilitario
+
+allowed_extensions = ['.jpg', '.jpeg', '.png', '.heic', '.webp', '.avif', '.mp4', '.mov']
+IMAGES_PATH_BASE = "VA/Images"  # Asegúrate que este path sea correcto
+
+@pytest.mark.parametrize("config", CONFIGS)
+def test_agentic_od(config):
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+
+    import Agentic_Object_Detection
+    IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Agentic Object Detection")
+    IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
+    
+    if IMAGE_PATH is None:
+        print("❌ No se encontró ninguna imagen válida en el directorio.")
+        assert False, "No se encontró ninguna imagen válida en el directorio."  # Cambié return por assert
+    
+    if not any(IMAGE_PATH.lower().endswith(ext) for ext in allowed_extensions):
+        print(f"❌ Formato de archivo no permitido: {IMAGE_PATH}")
+        assert False, f"Formato de archivo no permitido: {IMAGE_PATH}"  # Cambié return por assert
+    
+    URL = f"{URL_BASE}/agentic-object-detection"
+    PROMPT = "Detect Aircraft"
+
+    result = Agentic_Object_Detection.create(URL, IMAGE_PATH, PROMPT, API_KEY)
+    assert result is not None, "Agentic Object Detection result is None"
+
+
 @pytest.mark.parametrize("config", CONFIGS)
 def test_owlv2(config):
 

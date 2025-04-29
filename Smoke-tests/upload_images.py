@@ -188,3 +188,45 @@ def upload_segmentation(api_key:str, url:str, directory:str):
         print(f'\033[31m' + '============================== 1 failed upload_images.py ==============================' + '\x1b[0m')
     else :
         print('\033[32m' + '============================== 1 passed upload_images.py ==============================' + '\x1b[0m')
+
+def upload_anomaly_detection(api_key:str, url:str, folders: list, folder_to_label: list, path:str):
+    allowed_file_formats = [".png", ".jpeg", ".jpg", ".xml", ".bmp"]
+    headers = {"apikey": api_key} 
+    print(folder_to_label, folders, url)
+    for folder in folders:
+        folder_path = os.path.join(path, folder)
+        images = [
+            image_file
+            for image_file in os.listdir(folder_path)
+            if any(image_file.lower().endswith(ext) for ext in allowed_file_formats)
+                    ]
+    
+        for image_file in images:
+            image_path = os.path.join(folder_path, image_file)
+    
+            # Prepare request data
+            with open(image_path, "rb") as image_data:
+                files = {
+                    "file": (
+                        image_file,
+                        image_data.read(),
+                    )
+                }
+                data = {
+                    "name": image_file,
+                    "label": folder_to_label[folder],
+                    "tags": ["test", "automation"],
+                }
+
+            # Send the POST request to upload the image
+            response = requests.post(url, headers=headers, files=files, data=data)
+
+            # Check for successful upload and handle any errors
+            if response.status_code == 200:
+                print(f"Image {image_path} uploaded successfully!")
+
+            else:
+                print(f"Error uploading image {image_path}: {response.text}")
+                print(f'\033[31m' + '============================== 1 failed upload_images.py ==============================' + '\x1b[0m')
+
+        print('\033[32m' + '============================== 1 passed upload_images.py ==============================' + '\x1b[0m')
