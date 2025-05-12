@@ -1,0 +1,33 @@
+name: Run Rate Limit Tests
+
+on:
+  workflow_dispatch: # Para ejecutarlo manualmente
+
+
+jobs:
+  ratelimit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'   
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Rate Limit Tests
+      run: node runner.js
+
+    - name: Upload Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: ratelimit-test-results
+        path: |
+          ADE-Tier1.txt
+          ADE-Tier2.txt
+          ADE-Tier3.txt
