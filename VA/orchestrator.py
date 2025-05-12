@@ -4,6 +4,7 @@ import os
 import time
 from Florencev2QA import create
 
+
 IMAGES_PATH_BASE = os.path.join("VA", "Images")
 
 # URL_BASE = "https://api.va.staging.landing.ai/v1/tools"
@@ -50,6 +51,54 @@ import utils as u  # Asumo que 'u' es tu módulo utilitario
 
 allowed_extensions = ['.jpg', '.jpeg', '.png', '.heic', '.webp', '.avif', '.mp4', '.mov']
 IMAGES_PATH_BASE = "VA/Images"  # Asegúrate que este path sea correcto
+
+
+@pytest.mark.parametrize("config", CONFIGS)
+def test_text_to_instance_segmentation(config):
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+
+    import Text_to_segmentation
+    IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "Sam2")
+    IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
+
+    if IMAGE_PATH is None:
+        print("❌ No se encontró ninguna imagen válida en el directorio.")
+        assert False, "No se encontró ninguna imagen válida en el directorio."
+
+    if not any(IMAGE_PATH.lower().endswith(ext) for ext in allowed_extensions):
+        print(f"❌ Formato de archivo no permitido: {IMAGE_PATH}")
+        assert False, f"Formato de archivo no permitido: {IMAGE_PATH}"
+
+    URL = f"{URL_BASE}/text-to-instance-segmentation"
+    PROMPT = "apple"
+
+    result = Text_to_segmentation.create(URL, IMAGE_PATH, PROMPT, API_KEY)
+    assert result is not None, "Text To Instance Segmentation result is None"
+
+
+@pytest.mark.parametrize("config", CONFIGS)
+def test_agentic_document_analysis(config):
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+    
+    import Agentic_Document_Analysis
+    IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "ADE")
+    IMAGE_PATH = u.first_file_finder(IMAGE_DIR)
+
+    if IMAGE_PATH is None:
+        print("❌ No se encontró ninguna imagen válida en el directorio.")
+        assert False, "No se encontró ninguna imagen válida en el directorio."
+    
+    if not any(IMAGE_PATH.lower().endswith(ext) for ext in allowed_extensions):
+        print(f"❌ Formato de archivo no permitido: {IMAGE_PATH}")
+        assert False, f"Formato de archivo no permitido: {IMAGE_PATH}"
+
+    URL = f"{URL_BASE}/agentic-document-analysis"
+    PROMPT = "Describe the document content"
+
+    result = Agentic_Document_Analysis.create(URL, IMAGE_PATH, PROMPT, API_KEY)
+    assert not result.empty, "Agentic Document Analysis result is empty"
 
 @pytest.mark.parametrize("config", CONFIGS)
 def test_agentic_od(config):

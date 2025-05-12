@@ -82,14 +82,18 @@ from dotenv import load_dotenv
 import os
 
 # Load environment variables from the .env file
+# Load environment variables from the .env file
 load_dotenv()
 
-# Now you can access the environment variable with:
-api_key = os.getenv("VISION_AGENT_API_KEY")
+# Set variables explicitly (opcional pero recomendado para claridad)
+# Asignar las variables a las variables de entorno del sistema
+endpoint_host = os.getenv("ENDPOINT_HOST")
+vision_agent_api_key = os.getenv("VISION_AGENT_API_KEY")
 
-print(f"API Key loaded: {api_key}")
+# Verifica que las variables se cargaron correctamente
+print(f"Endpoint Host: {endpoint_host}")
+print(f"API Key loaded: {vision_agent_api_key}")
 
-import os
 from agentic_doc.parse import parse_documents
 
 # Public test URL

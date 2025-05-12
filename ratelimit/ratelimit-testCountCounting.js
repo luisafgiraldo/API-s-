@@ -30,9 +30,9 @@ let failedRequestsPerMinute = new Map(); // Track failed requests per minute
 
 // Set URL based on tier
 const API_URL = {
-  staging: 'https://api.va.staging.landing.ai/v1/tools/text-to-instance-segmentation',
-  production: 'https://api.va.landing.ai/v1/tools/text-to-instance-segmentation',
-  dev: 'https://api.va.dev.landing.ai/v1/tools/text-to-instance-segmentation'
+  staging: 'https://api.va.staging.landing.ai/v1/tools/text-to-object-detection',
+  production: 'https://api.va.landing.ai/v1/tools/text-to-object-detection',
+  dev: 'https://api.va.dev.landing.ai/v1/tools/text-to-object-detection'
 }[tier];
 
 if (!API_URL) {

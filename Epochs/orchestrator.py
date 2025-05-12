@@ -7,7 +7,7 @@ import os
 # Base URL for API requests
 url_base = "https://api.staging.landing.ai/v1/projects"
 # API key for authentication
-api_key = "land_sk_0m6ToQoQz3jYgf9VZMQHBl3tJRaxYy02qlp3IC7q5UsXPnqctR"  # Org: Enterprise Org
+api_key = "land_sk_wlWFn5kyB1VNoUwsHLrNLk2Mnv6XByS4YMP7bpOdNFRGXn5YBB"  # Org: Enterprise Org
 
 # Dictionary to map project type IDs to their corresponding names
 projectType = {1: "classification", 2: "segmentation", 3: "object-detection"}
