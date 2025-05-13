@@ -1,76 +1,33 @@
-name: run-rate-limit-tests
+name: Run Rate Limit Tests
 
 on:
-  workflow_dispatch:  # Ejecutar solo manualmente
+  workflow_dispatch: # Para ejecutarlo manualmente
 
-permissions:
-  contents: read
-  actions: read
-  id-token: write
 
 jobs:
-  run-tier1:
-    name: Run AGDE Tier 1
+  ratelimit-tests:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Give execution permissions
-        run: chmod +x Rate-Limit/run-agde-tier1.sh
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'   
 
-      - name: Run Tier 1 script
-        run: ./Rate-Limit/run-agde-tier1.sh
+    - name: Install dependencies
+      run: npm install
 
-      - name: Mostrar contenido del log Tier 1
-        run: cat Rate-Limit/request_log_tier1.txt || echo "❌ El archivo no existe o está vacío"
+    - name: Run Rate Limit Tests
+      run: node runner.js
 
-      - name: Upload Tier 1 log
-        uses: actions/upload-artifact@v4
-        with:
-          name: request-log-tier1
-          path: Rate-Limit/request_log_tier1.txt
-
-  run-tier2:
-    name: Run AGDE Tier 2
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Give execution permissions
-        run: chmod +x Rate-Limit/run-agde-tier2.sh
-
-      - name: Run Tier 2 script
-        run: ./Rate-Limit/run-agde-tier2.sh
-
-      - name: Mostrar contenido del log Tier 2
-        run: cat Rate-Limit/request_log_tier2.txt || echo "❌ El archivo no existe o está vacío"
-
-      - name: Upload Tier 2 log
-        uses: actions/upload-artifact@v4
-        with:
-          name: request-log-tier2
-          path: Rate-Limit/request_log_tier2.txt
-
-  run-tier3:
-    name: Run AGDE Tier 3
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Give execution permissions
-        run: chmod +x Rate-Limit/run-agde-tier3.sh
-
-      - name: Run Tier 3 script
-        run: ./Rate-Limit/run-agde-tier3.sh
-
-      - name: Mostrar contenido del log Tier 3
-        run: cat Rate-Limit/request_log_tier3.txt || echo "❌ El archivo no existe o está vacío"
-
-      - name: Upload Tier 3 log
-        uses: actions/upload-artifact@v4
-        with:
-          name: request-log-tier3
-          path: Rate-Limit/request_log_tier3.txt
+    - name: Upload Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: ratelimit-test-results
+        path: |
+          ADE-Tier1.txt
+          ADE-Tier2.txt
+          ADE-Tier3.txt
