@@ -4,7 +4,7 @@ API_KEY="M3c0a3VzMWthb284dnF4d2pzOTdjOkdKZ2ZvaEl4MERuVGdKSkJ3QXhSbGgwYTI5c3FjWGx
 PARALLEL_REQUESTS=100
 TOTAL_REQUESTS=100
 STATUS_LOG="status_codes.log"
-OUTPUT_FILE="/goodimg-parallelreq/reports/AOD-T2_goodimg_report.txt"
+OUTPUT_FILE="goodimg-parallelreq/reports/AOD-T2_goodimg_report.txt"
 TEMP_REPORT="temp_report.txt"
 
 # Ensure the log and output files are empty
