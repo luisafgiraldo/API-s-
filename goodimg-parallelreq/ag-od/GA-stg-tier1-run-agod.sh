@@ -1,10 +1,10 @@
 #!/bin/bash
 
-API_KEY="M3c0a3VzMWthb284dnF4d2pzOTdjOkdKZ2ZvaEl4MERuVGdKSkJ3QXhSbGgwYTI5c3FjWGxx"
+API_KEY="anpuMXB6ZGhod3k0Y2pldndnejE3OmxZaHRKUTlzUEtrODJrQzk4SnRLNzVlRGNLbU1YaVRj"
 PARALLEL_REQUESTS=100
 TOTAL_REQUESTS=100
 STATUS_LOG="status_codes.log"
-OUTPUT_FILE="/RL-req-status/reports/ADE-T2_goodimg_report.txt"
+OUTPUT_FILE="/goodimg-parallelreq/reports/AOD-T1_goodimg_report.txt"
 TEMP_REPORT="temp_report.txt"
 
 # Ensure the log and output files are empty
@@ -18,11 +18,12 @@ process_request() {
   echo "Request $i: start" > "$request_log"
   start_time=$(date +%s.%N)
   response=$(curl -X 'POST' \
-    'https://api.va.staging.landing.ai/v1/tools/agentic-document-analysis' \
+    'https://api.va.staging.landing.ai/v1/tools/agentic-object-detection' \
     -H "Authorization: Basic $API_KEY" \
     -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
-    -F 'image=@./RL-req-status/ag-de/small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
+    -F "prompts=word" \
+    -F 'image=@./goodimg-parallelreq/ag-od/small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
   echo "$response" >> "$STATUS_LOG"
   end_time=$(date +%s.%N)
   elapsed_time=$(echo "$end_time - $start_time" | bc)
@@ -55,7 +56,7 @@ test_end_time=$(date +%s.%N)
 
 # Generate the final report content and display it in the console
 {
-    echo -e "--------------------------------\nADE-T2-GOOD_IMG_TEST-Report:"
+    echo -e "--------------------------------\nAOD-T1-GOOD_IMG_TEST-Report:"
     awk '{count[$1]++} END {for (code in count) print "Count of " code " responses: " count[code]}' "$STATUS_LOG"
     test_duration=$(echo "$test_end_time - $test_start_time" | bc)
     echo "Total test duration: $test_duration seconds"

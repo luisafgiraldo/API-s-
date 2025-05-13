@@ -4,7 +4,7 @@ API_KEY="eXpqM2lvN21hb2xrc28wZDA4b2NuOndtbmlRdlRTQ1VOT0FhTUhTWXJWZFpIUk9ZaGFXYk9
 PARALLEL_REQUESTS=100
 TOTAL_REQUESTS=100
 STATUS_LOG="status_codes.log"
-OUTPUT_FILE="/RL-req-status/reports/ADE-T3_goodimg_report.txt"
+OUTPUT_FILE="/goodimg-parallelreq/reports/ADE-T3_goodimg_report.txt"
 TEMP_REPORT="temp_report.txt"
 
 # Ensure the log and output files are empty
@@ -22,7 +22,7 @@ process_request() {
     -H "Authorization: Basic $API_KEY" \
     -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
-    -F 'image=@./RL-req-status/ag-de/small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
+    -F 'image=@./goodimg-parallelreq/ag-de/small-img.png;' -s -w "%{http_code}\n" -o /dev/null)
   echo "$response" >> "$STATUS_LOG"
   end_time=$(date +%s.%N)
   elapsed_time=$(echo "$end_time - $start_time" | bc)
