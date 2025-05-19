@@ -5,6 +5,8 @@ import time
 from Florencev2QA import create
 
 
+
+
 IMAGES_PATH_BASE = os.path.join("VA", "Images")
 
 # URL_BASE = "https://api.va.staging.landing.ai/v1/tools"
@@ -47,6 +49,7 @@ import os
 import pytest
 import pandas as pd
 import Agentic_Object_Detection
+import IXC25VQA
 import utils as u  # Asumo que 'u' es tu módulo utilitario
 
 allowed_extensions = ['.jpg', '.jpeg', '.png', '.heic', '.webp', '.avif', '.mp4', '.mov']
@@ -76,6 +79,19 @@ def test_text_to_instance_segmentation(config):
     result = Text_to_segmentation.create(URL, IMAGE_PATH, PROMPT, API_KEY)
     assert result is not None, "Text To Instance Segmentation result is None"
 
+@pytest.mark.parametrize("config", CONFIGS)
+def test_ixc25(config):
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+
+    IMAGE_DIR = u.union_path(IMAGES_PATH_BASE, "IXC25")
+    IMAGE_PATH = u.first_file_finder(IMAGE_DIR, allowed_extensions)
+
+    URL = f"{URL_BASE}/internlm-xcomposer2"
+    PROMPT = "What color is the building behind the car?"
+
+    result = IXC25VQA.create(URL, IMAGE_PATH, PROMPT, API_KEY)
+    assert result is not None, "IXC25 result is None"
 
 @pytest.mark.parametrize("config", CONFIGS)
 def test_agentic_document_analysis(config):

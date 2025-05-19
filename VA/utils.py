@@ -47,34 +47,35 @@ def transformer(image_path):
         return None
 
 
-def first_file_finder(image_dir):
+def first_file_finder(image_dir, allowed_extensions=None):
     """
-    Finds the first file in the specified directory, excluding hidden files.
+    Finds the first file in the specified directory matching allowed extensions.
 
     Args:
-        image_dir (str): The path to the directory containing the files.
+        image_dir (str): The path to the directory.
+        allowed_extensions (list, optional): List of allowed file extensions.
 
     Returns:
-        str: The full path to the first file found.
-        None: If no files are found in the directory.
+        str: The full path to the first valid file found.
     """
+    if allowed_extensions is None:
+        allowed_extensions = [".jpg", ".jpeg", ".png"]
+
     try:
-        # Get a list of all files in the directory, excluding hidden files
         image_files = [
-            f
-            for f in os.listdir(image_dir)
-            if os.path.isfile(os.path.join(image_dir, f)) and not f.startswith(".")
+            f for f in os.listdir(image_dir)
+            if os.path.isfile(os.path.join(image_dir, f))
+            and not f.startswith(".")
+            and any(f.lower().endswith(ext) for ext in allowed_extensions)
         ]
         if not image_files:
-            print("No files found in the directory.")
+            print(f"No valid files found in {image_dir} with extensions: {allowed_extensions}")
             return None
-        else:
-            # Return the full path to the first file
-            image_path = os.path.join(image_dir, image_files[0])
-            return image_path
+        return os.path.join(image_dir, image_files[0])
     except FileNotFoundError:
         print(f"Directory not found: {image_dir}")
         return None
+
 
 
 
