@@ -59,7 +59,7 @@ def first_file_finder(image_dir, allowed_extensions=None):
         str: The full path to the first valid file found.
     """
     if allowed_extensions is None:
-        allowed_extensions = [".jpg", ".jpeg", ".png"]
+        allowed_extensions = [".jpg", ".jpeg", ".png", "mp4", "mov"]
 
     try:
         image_files = [

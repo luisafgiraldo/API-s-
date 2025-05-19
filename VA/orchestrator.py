@@ -50,6 +50,7 @@ import pytest
 import pandas as pd
 import Agentic_Object_Detection
 import IXC25VQA
+from Temporal_localization import temporal_localization
 import utils as u  # Asumo que 'u' es tu módulo utilitario
 
 allowed_extensions = ['.jpg', '.jpeg', '.png', '.heic', '.webp', '.avif', '.mp4', '.mov']
@@ -78,6 +79,20 @@ def test_text_to_instance_segmentation(config):
 
     result = Text_to_segmentation.create(URL, IMAGE_PATH, PROMPT, API_KEY)
     assert result is not None, "Text To Instance Segmentation result is None"
+
+@pytest.mark.parametrize("config", CONFIGS)
+def test_video_temporal_localization(config):
+    URL_BASE = config['URL_BASE']
+    API_KEY = config['API_KEY']
+
+    VIDEO_DIR = u.union_path(IMAGES_PATH_BASE, "IXC25 Temporal Localization")
+    VIDEO_PATH = u.first_file_finder(VIDEO_DIR)
+    URL = f"{URL_BASE}/video-temporal-localization"
+    PROMPT = "Describe lo que ocurre en el video"
+    CHUNK_LENGTH = 5
+
+    result = temporal_localization(URL, VIDEO_PATH, PROMPT, CHUNK_LENGTH, API_KEY)
+    assert result, "Response JSON is empty or None"
 
 @pytest.mark.parametrize("config", CONFIGS)
 def test_ixc25(config):
