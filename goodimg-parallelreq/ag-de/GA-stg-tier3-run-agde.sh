@@ -41,19 +41,23 @@ export OUTPUT_FILE
 test_start_time=$(date +%s.%N)
 
 for ((i=1; i<=TOTAL_REQUESTS; i++)); do
-  # Start process in background
   (process_request $i) &
 
-  # If we've reached our parallelism limit or the last request, wait
   if (( i % PARALLEL_REQUESTS == 0 )) || (( i == TOTAL_REQUESTS )); then
-    wait # Wait for all background processes to complete
+    wait
   fi
 done
+
+# Assert no unwanted status codes were received
+unwanted_codes=$(awk '!/200|429/' "$STATUS_LOG" | wc -l)
+if [ "$unwanted_codes" -gt 0 ]; then
+    echo "Test failed: Unwanted status codes detected."
+    exit 1
+fi
 
 # Capture the end time of the test
 test_end_time=$(date +%s.%N)
 
-# Generate the final report content and display it in the console
 {
     echo -e "--------------------------------\nADE-T3-GOOD_IMG_TEST-Report:"
     awk '{count[$1]++} END {for (code in count) print "Count of " code " responses: " count[code]}' "$STATUS_LOG"
@@ -63,9 +67,5 @@ test_end_time=$(date +%s.%N)
     echo ""
 } | tee "$TEMP_REPORT"
 
-# Since the final report is already printed to the console, 
-# we directly prepend the report to the beginning of the output file.
 cat "$TEMP_REPORT" "$OUTPUT_FILE" > temp && mv temp "$OUTPUT_FILE"
-
-# Clean up the temporary report file
 rm "$TEMP_REPORT"

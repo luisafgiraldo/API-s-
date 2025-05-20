@@ -1,8 +1,8 @@
 #!/bin/bash
 
 API_KEY="eXpqM2lvN21hb2xrc28wZDA4b2NuOndtbmlRdlRTQ1VOT0FhTUhTWXJWZFpIUk9ZaGFXYk9o"
-PARALLEL_REQUESTS=100
-TOTAL_REQUESTS=100
+PARALLEL_REQUESTS=300
+TOTAL_REQUESTS=1500
 STATUS_LOG="status_codes.log"
 OUTPUT_FILE="goodimg-parallelreq/reports/AOD-T3_goodimg_report.txt"
 TEMP_REPORT="temp_report.txt"
@@ -51,12 +51,18 @@ for ((i=1; i<=TOTAL_REQUESTS; i++)); do
   fi
 done
 
+# Assert no unwanted status codes were received
+unwanted_codes=$(awk '!/200|429/' "$STATUS_LOG" | wc -l)
+if [ "$unwanted_codes" -gt 0 ]; then
+    echo "Test failed: Unwanted status codes detected."
+    exit 1
+fi
+
 # Capture the end time of the test
 test_end_time=$(date +%s.%N)
 
-# Generate the final report content and display it in the console
 {
-    echo -e "--------------------------------\nAOD-T3-GOOD_IMG_TEST-Report:"
+    echo -e "--------------------------------\nADE-T3-GOOD_IMG_TEST-Report:"
     awk '{count[$1]++} END {for (code in count) print "Count of " code " responses: " count[code]}' "$STATUS_LOG"
     test_duration=$(echo "$test_end_time - $test_start_time" | bc)
     echo "Total test duration: $test_duration seconds"
@@ -64,9 +70,5 @@ test_end_time=$(date +%s.%N)
     echo ""
 } | tee "$TEMP_REPORT"
 
-# Since the final report is already printed to the console, 
-# we directly prepend the report to the beginning of the output file.
 cat "$TEMP_REPORT" "$OUTPUT_FILE" > temp && mv temp "$OUTPUT_FILE"
-
-# Clean up the temporary report file
 rm "$TEMP_REPORT"
