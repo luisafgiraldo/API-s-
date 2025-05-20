@@ -76,3 +76,8 @@ done
 # Combine TEMP_REPORT at the beginning of OUTPUT_FILE for final report
 cat "$TEMP_REPORT" "$OUTPUT_FILE" > temp && mv temp "$OUTPUT_FILE"
 rm "$TEMP_REPORT"
+
+# Exit with non-zero status code if unwanted status codes were detected
+if [ -s "$UNWANTED_STATUS_LOG" ]; then
+    exit 1
+fi
