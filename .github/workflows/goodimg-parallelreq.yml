@@ -22,19 +22,32 @@ jobs:
         run: ./goodimg-parallelreq/ag-de/GA-stg-tier3-run-agde.sh
 
       - name: Show content of the T3 log.
+        # Added if: always() here too, so this step runs even if the script fails
+        # to ensure we try to cat the log or show the error message.
+        if: always()
         run: cat goodimg-parallelreq/reports/ADE-T3_goodimg_report.txt || echo "❌ The file does not exist or is empty"
 
       - name: Upload ADE-T3_goodimg_report
+        # Added if: always() to ensure artifact upload is attempted
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: request-log-ADE-tier3
           path: goodimg-parallelreq/reports/ADE-T3_goodimg_report.txt
+          # Optional: if you want to upload even if the file doesn't exist (it will upload an empty artifact)
+          # otherwise, it might error if the file is missing.
+          # For robustness if the script fails before creating the file:
+          if-no-files-found: ignore # or 'warn' or 'error' (default)
 
   run-AOD-tier3:
     name: Run GOODIMG AOD Tier 3
     runs-on: ubuntu-latest
-    needs: run-ADE-tier3
-    continue-on-error: true # This allows the workflow to continue even if job1 fails
+    #needs: run-ADE-tier3
+    # This is the crucial line:
+    #if: always()
+    # This allows the workflow to continue with a green check even if this specific job (run-AOD-tier3) fails.
+    # If you want the workflow to show as "failed" if run-AOD-tier3 fails, you can remove this.
+    continue-on-error: true
 
     steps:
       - name: Checkout repository
@@ -47,10 +60,15 @@ jobs:
         run: ./goodimg-parallelreq/ag-od/GA-stg-tier3-run-agod.sh
 
       - name: Show content of the T3 log.
+        # Added if: always() here too for consistency and robustness
+        if: always()
         run: cat goodimg-parallelreq/reports/AOD-T3_goodimg_report.txt || echo "❌ The file does not exist or is empty"
 
       - name: Upload AOD-T3_goodimg_report
+        # Added if: always() to ensure artifact upload is attempted
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: request-log-AOD-tier3
           path: goodimg-parallelreq/reports/AOD-T3_goodimg_report.txt
+          if-no-files-found: ignore # Optional, for robustness
