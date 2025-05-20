@@ -42,7 +42,7 @@ jobs:
   run-AOD-tier3:
     name: Run GOODIMG AOD Tier 3
     runs-on: ubuntu-latest
-    needs: run-ADE-tier3
+    #needs: run-ADE-tier3
     # This is the crucial line:
     #if: always()
     # This allows the workflow to continue with a green check even if this specific job (run-AOD-tier3) fails.
