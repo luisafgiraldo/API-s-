@@ -140,6 +140,15 @@ async function runTest() {
     );
   }
   console.log('==========================\n');
+  
+  const maxAllowedRpm = 33.00;
+  if (actualRpm > maxAllowedRpm) {
+    console.error(`❌ Test failed: Actual RPM (${actualRpm.toFixed(2)}) exceeds maximum allowed (${maxAllowedRpm})`);
+    process.exit(1); // Forzar fallo en el workflow
+  } else {
+    console.log(`✅ Test passed: Actual RPM (${actualRpm.toFixed(2)}) is within the allowed limit (${maxAllowedRpm})`);
+  }
+
 }
 
 runTest().catch(console.error); 
