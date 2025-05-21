@@ -2,6 +2,9 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+const FormData = require('form-data');
+const fetch = require('node-fetch');
+
 // Parse command line arguments
 const args = process.argv.slice(2);
 const params = {};
@@ -16,23 +19,25 @@ for (let i = 0; i < args.length; i += 2) {
 // Set default values and parse arguments
 const concurrency = 1; // Fixed to 1 for now
 const tier = params.tier || 'staging';
-const apiKey = params.apikey || 'anpuMXB6ZGhod3k0Y2pldndnejE3OmxZaHRKUTlzUEtrODJrQzk4SnRLNzVlRGNLbU1YaVRj';
-const rpm = parseInt(params.rpm) || 25; // Default to 60 requests per minute
-const durationMinutes = parseInt(params.duration) || 3; // Default to 5 minutes
-const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes); // Calculate total requests based on duration and RPM
+const apiKey =
+  params.apikey ||
+  'anpuMXB6ZGhod3k0Y2pldndnejE3OmxZaHRKUTlzUEtrODJrQzk4SnRLNzVlRGNLbU1YaVRj';
+const rpm = parseInt(params.rpm) || 25;
+const durationMinutes = parseInt(params.duration) || 3;
+const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes);
 
 // Add counters for statistics
 let successfulRequests = 0;
 let failedRequests = 0;
 let startTime = null;
-let requestsPerMinute = new Map(); // Track requests per minute
-let failedRequestsPerMinute = new Map(); // Track failed requests per minute
+let requestsPerMinute = new Map();
+let failedRequestsPerMinute = new Map();
 
 // Set URL based on tier
 const API_URL = {
   staging: 'https://api.va.staging.landing.ai/v1/tools/agentic-document-analysis',
   production: 'https://api.va.landing.ai/v1/tools/agentic-document-analysis',
-  dev: 'https://api.va.dev.landing.ai/v1/tools/agentic-document-analysis'
+  dev: 'https://api.va.dev.landing.ai/v1/tools/agentic-document-analysis',
 }[tier];
 
 if (!API_URL) {
@@ -40,7 +45,6 @@ if (!API_URL) {
   process.exit(1);
 }
 
-// Calculate number of iterations needed
 const iterations = Math.ceil(TOTAL_REQUESTS / concurrency);
 
 console.log(`Hitting endpoint: ${API_URL}`);
@@ -52,7 +56,6 @@ console.log(`Total requests: ${TOTAL_REQUESTS}`);
 console.log(`Number of iterations: ${iterations}`);
 console.log('Press Ctrl+C to stop the test');
 
-// Handle Ctrl+C gracefully
 process.on('SIGINT', () => {
   console.log('\nStopping all requests...');
   process.exit(0);
@@ -66,7 +69,10 @@ async function makeRequest(requestNumber) {
     const formData = new FormData();
     const pdfPath = path.join(__dirname, 'Loan+Form.pdf');
     const pdfBuffer = fs.readFileSync(pdfPath);
-    formData.append('image', new Blob([pdfBuffer], { type: 'application/pdf' }));
+    formData.append('image', pdfBuffer, {
+      filename: 'Loan+Form.pdf',
+      contentType: 'application/pdf',
+    });
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -74,6 +80,7 @@ async function makeRequest(requestNumber) {
         Authorization: `Basic ${apiKey}`,
         accept: 'application/json',
         'X-Ratelimit-Test': 'true',
+        ...formData.getHeaders(),
       },
       body: formData,
     });
@@ -85,11 +92,15 @@ async function makeRequest(requestNumber) {
     if (response.status !== 429) {
       successfulRequests++;
       requestsPerMinute.set(minuteNumber, (requestsPerMinute.get(minuteNumber) || 0) + 1);
-      console.log(`✅ request ${requestNumber}: Status Code: ${response.status}, time: ${elapsedTime}s`);
+      const log = `✅ request ${requestNumber}: Status Code: ${response.status}, time: ${elapsedTime}s`;
+      console.log(log);
+      process.stdout.write(log + '\n');
     } else {
       failedRequests++;
       failedRequestsPerMinute.set(minuteNumber, (failedRequestsPerMinute.get(minuteNumber) || 0) + 1);
-      console.error(`⚠️ request ${requestNumber}: Rate Limited (429), time: ${elapsedTime}s`);
+      const errorLog = `⚠️ request ${requestNumber}: Rate Limited (429), time: ${elapsedTime}s`;
+      console.error(errorLog);
+      process.stderr.write(errorLog + '\n');
     }
   } catch (error) {
     failedRequests++;
@@ -111,7 +122,6 @@ async function runTest() {
     await Promise.all(requests);
   }
 
-  // Calculate and display summary
   const endTime = Date.now();
   const totalTimeInMinutes = (endTime - startTime) / (1000 * 60);
   const actualRpm = successfulRequests / totalTimeInMinutes;
@@ -125,7 +135,15 @@ async function runTest() {
   console.log(`Actual Rate: ${actualRpm.toFixed(2)} requests/minute`);
   console.log(`Target Rate: ${rpm} requests/minute`);
 
-  // Display per-minute breakdown
+  // Check if actual RPM exceeds threshold (optional, can fail CI)
+  const maxAllowedRpm = 13.99;
+  if (actualRpm > maxAllowedRpm) {
+    console.error(`❌ Actual Rate (${actualRpm.toFixed(2)}) es mayor al límite permitido (${maxAllowedRpm}).`);
+    process.exit(1);
+  } else {
+    console.log(`✅ Actual Rate (${actualRpm.toFixed(2)}) está dentro del límite permitido.`);
+  }
+
   console.log('\n=== Per-Minute Breakdown ===');
   const sortedMinutes = Array.from(new Set([...requestsPerMinute.keys(), ...failedRequestsPerMinute.keys()])).sort(
     (a, b) => a - b,
@@ -134,12 +152,9 @@ async function runTest() {
     const successful = requestsPerMinute.get(minute) || 0;
     const failed = failedRequestsPerMinute.get(minute) || 0;
     const total = successful + failed;
-    console.log(
-      // eslint-disable-next-line max-len
-      `Minute ${minute + 1}: ${total} total requests (${successful} successful, ${failed} failed)`,
-    );
+    console.log(`Minute ${minute + 1}: ${total} total requests (${successful} successful, ${failed} failed)`);
   }
   console.log('==========================\n');
 }
 
-runTest().catch(console.error); 
+runTest().catch(console.error);
