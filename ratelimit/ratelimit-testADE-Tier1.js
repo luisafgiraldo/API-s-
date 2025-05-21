@@ -43,7 +43,7 @@ if (!API_URL) {
 // Calculate number of iterations needed
 const iterations = Math.ceil(TOTAL_REQUESTS / concurrency);
 
-console.log(Hitting endpoint: ${API_URL});
+console.log(`Hitting endpoint: ${API_URL}`);
 console.log(Running with concurrency: ${concurrency});
 console.log(Using tier: ${tier});
 console.log(Duration: ${durationMinutes} minutes);
