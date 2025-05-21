@@ -2,8 +2,10 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 
 try {
-  const output1 = execSync('node ratelimit/ratelimit-testADE-Tier1.js --tier staging --rpm 25 --duration 3', { encoding: 'utf-8' });
-  fs.writeFileSync('ADE-Tier1.txt', output1);
+  const output1 = execSync('node ratelimit/ratelimit-testADE-Tier1.js --tier staging --rpm 25 --duration 3', { 
+    encoding: 'utf-8',
+    stdio: ['pipe', 'pipe', 'pipe'], // stdin, stdout, stderr pipes activados
+  });
 
   const output2 = execSync('node ratelimit/ratelimit-testADE-Tier2.js --tier staging --rpm 40 --duration 3', { encoding: 'utf-8' });
   fs.writeFileSync('ADE-Tier2.txt', output2);

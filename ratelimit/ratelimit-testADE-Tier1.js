@@ -17,7 +17,7 @@ for (let i = 0; i < args.length; i += 2) {
 const concurrency = 1; // Fixed to 1 for now
 const tier = params.tier || 'staging';
 const apiKey = params.apikey || 'cXc3OHczMmhkMmY3a3QxaHJrc3lhOlVqUzM0U3lrM1BqczlKN0tJMVNxRnJFOExhcmpWbHM1';
-const rpm = parseInt(params.rpm) || 50; // Default to 60 requests per minute
+const rpm = parseInt(params.rpm) || 25; // Default to 60 requests per minute
 const durationMinutes = parseInt(params.duration) || 3; // Default to 5 minutes
 const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes); // Calculate total requests based on duration and RPM
 
@@ -140,6 +140,13 @@ async function runTest() {
     );
   }
   console.log('==========================\n');
+  const maxAllowedRpm = 12.99;
+  if (actualRpm > maxAllowedRpm) {
+    console.error(`❌ Test failed: Actual RPM (${actualRpm.toFixed(2)}) exceeds maximum allowed (${maxAllowedRpm})`);
+    process.exit(1); // Forzar fallo en el workflow
+  } else {
+    console.log(`✅ Test passed: Actual RPM (${actualRpm.toFixed(2)}) is within the allowed limit (${maxAllowedRpm})`);
+  }
 }
 
 runTest().catch(console.error); 
