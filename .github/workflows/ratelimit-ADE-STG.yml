@@ -27,11 +27,20 @@ jobs:
           fi
 
       - name: Run Tier 1 Test
-        run: node ratelimit/ratelimit-testADE-Tier1.js --tier staging --duration 3 --rpm 25
+        run: node ratelimit/ratelimit-testADE-Tier1.js --tier staging --duration 3 --rpm 25 > logstier1.txt 2>&1
 
       - name: Run Tier 2 Test
-        run: node ratelimit/ratelimit-testADE-Tier2.js --tier staging --duration 3 --rpm 40
+        run: node ratelimit/ratelimit-testADE-Tier2.js --tier staging --duration 3 --rpm 40 > logstier2.txt 2>&1
 
       - name: Run Tier 3 Test
-        run: node ratelimit/ratelimit-testADE-Tier3.js --tier staging --duration 3 --rpm 80
+        run: node ratelimit/ratelimit-testADE-Tier3.js --tier staging --duration 3 --rpm 100 > logstier3.txt 2>&1
+
+      - name: Upload results as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: rate-limit-test-results
+          path: |
+            logstier1.txt
+            logstier2.txt
+            logstier3.txt
 
