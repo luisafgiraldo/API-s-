@@ -17,7 +17,7 @@ for (let i = 0; i < args.length; i += 2) {
 const concurrency = 1; // Fixed to 1 for now
 const tier = params.tier || 'staging';
 const apiKey = params.apikey || 'NWM3amtjdnBoejN6anludHl5cnU1OkFBbVoyNWlJNXoyZGVkWmZuc0tSWU1XeWU1MXpqbGQ3';
-const rpm = parseInt(params.rpm) || 100; // Default to 60 requests per minute
+const rpm = parseInt(params.rpm) || 80; // Default to 60 requests per minute
 const durationMinutes = parseInt(params.duration) || 3; // Default to 5 minutes
 const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes); // Calculate total requests based on duration and RPM
 
