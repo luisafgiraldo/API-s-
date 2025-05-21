@@ -1,7 +1,7 @@
 import requests
 import time
 
-pdf_path = "page-limit/pdfs/Marco_Aurelio_Meditaciones_50_pages.pdf"
+pdf_path = "page-limit/pdfs/Marco_Aurelio_Meditaciones_101_pages.pdf"
 
 tiers = [
     {
