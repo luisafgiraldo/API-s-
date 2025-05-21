@@ -1,4 +1,4 @@
-name: Run Rate Limit Tests ADE STG
+name: Run Rate Limit Tests AOD STG
 
 on:
   workflow_dispatch:
