@@ -70,3 +70,11 @@ cat "$TEMP_REPORT" "$OUTPUT_FILE" > temp && mv temp "$OUTPUT_FILE"
 
 # Clean up the temporary report file
 rm "$TEMP_REPORT"
+
+
+#-------------------------------------------------------------------------------------------------
+#account_credentials
+#-------------------------------------------------------------------------------------------------
+#username: internal.qatest+tier1-goodimg@landing.ai
+#password: rmb@pct0gnc2PYG9tza
+#-------------------------------------------------------------------------------------------------
