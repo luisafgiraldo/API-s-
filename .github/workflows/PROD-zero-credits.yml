@@ -25,21 +25,3 @@ jobs:
     - name: Run zero-credits API script
       run: python zero-credits/PROD/PROD-API-zero-credits.py
    
-  #Run-PL-unhappy:
-    #name: Run-PL-unhappy-AllTiers
-    #runs-on: ubuntu-latest
-
-    #steps:
-    #- name: Checkout repository
-    #  uses: actions/checkout@v3
-
-    #- name: Set up Python
-    #  uses: actions/setup-python@v4
-    #  with:
-    #    python-version: '3.11'
-
-    #- name: Install dependencies
-    #  run: pip install requests
-
-    #- name: Run tier validation script
-    #  run: python page-limit/pl-unhappy/pl-unhappy.py
