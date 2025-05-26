@@ -2,11 +2,12 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+
 // Parse command line arguments
 const args = process.argv.slice(2);
 const params = {};
 for (let i = 0; i < args.length; i += 2) {
-  const key = args[i].replace(/^-+/, ''); // Remove both single and double dashes
+  const key = args[i].replace(/^-+/, '');
   const value = args[i + 1];
   if (key && value) {
     params[key] = value;
@@ -14,21 +15,19 @@ for (let i = 0; i < args.length; i += 2) {
 }
 
 // Set default values and parse arguments
-const concurrency = 1; // Fixed to 1 for now
+const concurrency = 1;
 const tier = params.tier || 'staging';
 const apiKey = params.apikey || 'OHYwZW8ydWoyYXVhZmRpazZzbzlqOmRCTDR0TVR1eFJ3SHVwU1dIVVNLSGVjRjllRWFFdnI2';
-const rpm = parseInt(params.rpm) || 40; // Default to 60 requests per minute
-const durationMinutes = parseInt(params.duration) || 3; // Default to 5 minutes
-const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes); // Calculate total requests based on duration and RPM
+const rpm = parseInt(params.rpm) || 40;
+const durationMinutes = parseInt(params.duration) || 3;
+const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes);
 
-// Add counters for statistics
 let successfulRequests = 0;
 let failedRequests = 0;
 let startTime = null;
-let requestsPerMinute = new Map(); // Track requests per minute
-let failedRequestsPerMinute = new Map(); // Track failed requests per minute
+let requestsPerMinute = new Map();
+let failedRequestsPerMinute = new Map();
 
-// Set URL based on tier
 const API_URL = {
   staging: 'https://api.va.staging.landing.ai/v1/tools/agentic-document-analysis',
   production: 'https://api.va.landing.ai/v1/tools/agentic-document-analysis',
@@ -40,7 +39,6 @@ if (!API_URL) {
   process.exit(1);
 }
 
-// Calculate number of iterations needed
 const iterations = Math.ceil(TOTAL_REQUESTS / concurrency);
 
 console.log(`Hitting endpoint: ${API_URL}`);
@@ -52,7 +50,6 @@ console.log(`Total requests: ${TOTAL_REQUESTS}`);
 console.log(`Number of iterations: ${iterations}`);
 console.log('Press Ctrl+C to stop the test');
 
-// Handle Ctrl+C gracefully
 process.on('SIGINT', () => {
   console.log('\nStopping all requests...');
   process.exit(0);
@@ -111,7 +108,6 @@ async function runTest() {
     await Promise.all(requests);
   }
 
-  // Calculate and display summary
   const endTime = Date.now();
   const totalTimeInMinutes = (endTime - startTime) / (1000 * 60);
   const actualRpm = successfulRequests / totalTimeInMinutes;
@@ -125,7 +121,6 @@ async function runTest() {
   console.log(`Actual Rate: ${actualRpm.toFixed(2)} requests/minute`);
   console.log(`Target Rate: ${rpm} requests/minute`);
 
-  // Display per-minute breakdown
   console.log('\n=== Per-Minute Breakdown ===');
   const sortedMinutes = Array.from(new Set([...requestsPerMinute.keys(), ...failedRequestsPerMinute.keys()])).sort(
     (a, b) => a - b,
@@ -134,21 +129,25 @@ async function runTest() {
     const successful = requestsPerMinute.get(minute) || 0;
     const failed = failedRequestsPerMinute.get(minute) || 0;
     const total = successful + failed;
-    console.log(
-      // eslint-disable-next-line max-len
-      `Minute ${minute + 1}: ${total} total requests (${successful} successful, ${failed} failed)`,
-    );
+    console.log(`Minute ${minute + 1}: ${total} total requests (${successful} successful, ${failed} failed)`);
   }
   console.log('==========================\n');
-  
+
+  // ✅ Validación doble: rango permitido de RPM
   const maxAllowedRpm = 33.00;
+  const minAllowedRpm = 30.00;
+
   if (actualRpm > maxAllowedRpm) {
     console.error(`❌ Test failed: Actual RPM (${actualRpm.toFixed(2)}) exceeds maximum allowed (${maxAllowedRpm})`);
-    process.exit(1); // Forzar fallo en el workflow
-  } else {
-    console.log(`✅ Test passed: Actual RPM (${actualRpm.toFixed(2)}) is within the allowed limit (${maxAllowedRpm})`);
+    process.exit(1);
   }
 
+  if (actualRpm < minAllowedRpm) {
+    console.error(`❌ Test failed: Actual RPM (${actualRpm.toFixed(2)}) is below minimum allowed (${minAllowedRpm})`);
+    process.exit(1);
+  }
+
+  console.log(`✅ Test passed: Actual RPM (${actualRpm.toFixed(2)}) is within the allowed range (${minAllowedRpm} - ${maxAllowedRpm})`);
 }
 
-runTest().catch(console.error); 
+runTest().catch(console.error);
