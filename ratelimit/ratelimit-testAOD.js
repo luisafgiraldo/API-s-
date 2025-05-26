@@ -2,11 +2,12 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+
 // Parse command line arguments
 const args = process.argv.slice(2);
 const params = {};
 for (let i = 0; i < args.length; i += 2) {
-  const key = args[i].replace(/^-+/, ''); // Remove both single and double dashes
+  const key = args[i].replace(/^-+/, '');
   const value = args[i + 1];
   if (key && value) {
     params[key] = value;
@@ -14,19 +15,19 @@ for (let i = 0; i < args.length; i += 2) {
 }
 
 // Set default values and parse arguments
-const concurrency = 1; // Fixed to 1 for now
+const concurrency = 1;
 const tier = params.tier || 'staging';
 const apiKey = params.apikey || 'OHYwZW8ydWoyYXVhZmRpazZzbzlqOmRCTDR0TVR1eFJ3SHVwU1dIVVNLSGVjRjllRWFFdnI2';
-const rpm = parseInt(params.rpm) || 30; // Default to 60 requests per minute
-const durationMinutes = parseInt(params.duration) || 3; // Default to 5 minutes
-const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes); // Calculate total requests based on duration and RPM
+const rpm = parseInt(params.rpm) || 30;
+const durationMinutes = parseInt(params.duration) || 3;
+const TOTAL_REQUESTS = Math.ceil(rpm * durationMinutes);
 
 // Add counters for statistics
 let successfulRequests = 0;
 let failedRequests = 0;
 let startTime = null;
-let requestsPerMinute = new Map(); // Track requests per minute
-let failedRequestsPerMinute = new Map(); // Track failed requests per minute
+let requestsPerMinute = new Map();
+let failedRequestsPerMinute = new Map();
 
 // Set URL based on tier
 const API_URL = {
@@ -67,7 +68,6 @@ async function makeRequest(requestNumber) {
     const pdfPath = path.join(__dirname, 'small-img.png');
     const pdfBuffer = fs.readFileSync(pdfPath);
     formData.append('image', new Blob([pdfBuffer], { type: 'image/png' }));
-
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -136,18 +136,26 @@ async function runTest() {
     const failed = failedRequestsPerMinute.get(minute) || 0;
     const total = successful + failed;
     console.log(
-      // eslint-disable-next-line max-len
       `Minute ${minute + 1}: ${total} total requests (${successful} successful, ${failed} failed)`,
     );
   }
   console.log('==========================\n');
+
+  // Thresholds
   const maxAllowedRpm = 13.00;
+  const minAllowedRpm = 10.00;
+
   if (actualRpm > maxAllowedRpm) {
     console.error(`❌ Test failed: Actual RPM (${actualRpm.toFixed(2)}) exceeds maximum allowed (${maxAllowedRpm})`);
-    process.exit(1); // Forzar fallo en el workflow
-  } else {
-    console.log(`✅ Test passed: Actual RPM (${actualRpm.toFixed(2)}) is within the allowed limit (${maxAllowedRpm})`);
+    process.exit(1);
   }
+
+  if (actualRpm < minAllowedRpm) {
+    console.error(`❌ Test failed: Actual RPM (${actualRpm.toFixed(2)}) is below minimum allowed (${minAllowedRpm})`);
+    process.exit(1);
+  }
+
+  console.log(`✅ Test passed: Actual RPM (${actualRpm.toFixed(2)}) is within the allowed range (${minAllowedRpm} - ${maxAllowedRpm})`);
 }
 
-runTest().catch(console.error); 
+runTest().catch(console.error);
