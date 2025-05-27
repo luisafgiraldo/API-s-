@@ -1,0 +1,25 @@
+name: Run PDF Analysis Chunk Type Test-PROD
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  PROD-pdf-analysis-chunk-type:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Run PDF Analysis Test
+      run: python Test_Chunk_Type/PROD/test_chunk_type.py
