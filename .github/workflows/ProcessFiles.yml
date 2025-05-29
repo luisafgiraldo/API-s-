@@ -18,11 +18,11 @@ jobs:
 
     - name: 📦 Install dependencies
       run: pip install requests
-      
+
     - name: 🧾 Debug - Show files
-      run: ls -R
+      run: |
+        pwd
+        ls -R
 
     - name: 🚀 Run image request test
-      run: python ./API-s-/measuring_time/time.py
-
-
+      run: python measuring_time/time.py
