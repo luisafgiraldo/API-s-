@@ -23,5 +23,6 @@ jobs:
       run: ls -R
 
     - name: 🚀 Run image request test
-      run: python measuring_time/time.py
+      run: python ./API-S-/measuring_time/time.py
+
 
