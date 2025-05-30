@@ -2,7 +2,7 @@
 USERNAME = "internal.qatest@landing.ai"
 PASSWORD = "rmb@pct0gnc2PYG9tza"
 
-URL = "https://va.staging.landing.ai/"
+URL = "https://va.landing.ai/"
 
 # List of elements to test
 ELEMENTS_OD = [
