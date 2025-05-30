@@ -15,34 +15,38 @@ image_paths = [
 
 summary = []
 errors = []
+num_requests_per_image = 10
 
 for image_path in image_paths:
     image_name = os.path.basename(image_path)
-    with open(image_path, "rb") as image_file:
-        files = {"image": image_file}
+    
+    for i in range(1, num_requests_per_image + 1):
+        with open(image_path, "rb") as image_file:
+            files = {"image": image_file}
 
-        start_time = time.time()
-        response = requests.post(url, files=files, headers=headers)
-        duration = time.time() - start_time
+            start_time = time.time()
+            response = requests.post(url, files=files, headers=headers)
+            duration = time.time() - start_time
 
-        status_code = response.status_code
+            status_code = response.status_code
 
-        if status_code != 200:
-            errors.append(f"{image_name} failed with status code {status_code}")
+            if status_code != 200:
+                errors.append(f"{image_name} | Run {i} failed with status code {status_code}")
 
-        summary.append({
-            "image": image_name,
-            "status": status_code,
-            "time": f"{duration:.3f} seconds"
-        })
+            summary.append({
+                "image": image_name,
+                "run": i,
+                "status": status_code,
+                "time": f"{duration:.3f} seconds"
+            })
 
-# Summary Final
+# Summary 
 print("\n===== TEST SUMMARY =====")
 for result in summary:
-    print(f"Image: {result['image']} | Status: {result['status']} | Time: {result['time']}")
+    print(f"Image: {result['image']} | Run: {result['run']} | Status: {result['status']} | Time: {result['time']}")
 print("=========================")
 
-# Falla el test si hubo al menos un error
+
 if errors:
     print("\n❌ Some tests failed:")
     for e in errors:
