@@ -17,7 +17,7 @@ file_paths = [
 
 summary = []
 errors = []
-num_requests_per_file = 10
+num_requests_per_file = 3
 
 for file_path in file_paths:
     file_name = os.path.basename(file_path)
