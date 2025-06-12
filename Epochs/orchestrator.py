@@ -194,7 +194,7 @@ v_commands_backbone = [
     f"""
         project_id=137764742426668,
         name=None,
-        architecture="ConvNextEdge-[16M]",
+        architecture="ConvNextEmbeddeed-[16M]",
         epochs=20,
         height=512,
         width=512,
@@ -210,7 +210,7 @@ v_commands_backbone = [
     f"""
         project_id=137764864798766,
         name=None,
-        architecture="ConvNextEdge-[16M]",
+        architecture="ConvNextEmbeddeed-[16M]",
         epochs=20,
         height=512,
         width=512,
@@ -226,7 +226,7 @@ v_commands_backbone = [
     f"""
         project_id=137764891097135,
         name=None,
-        architecture="ConvNextEdge-[16M]",
+        architecture="ConvNextEmbeddeed-[16M]",
         epochs=20,
         height=512,
         width=512,
