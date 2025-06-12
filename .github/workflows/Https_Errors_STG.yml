@@ -32,4 +32,5 @@ jobs:
 
     - name: Analyze HTTP responses
       run: |
-        python3.12 Https_errors/https_errors_counter.py
+        python3.12 Https_errors/http_errors_counter.py
+
