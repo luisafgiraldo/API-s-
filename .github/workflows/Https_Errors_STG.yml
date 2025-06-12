@@ -28,7 +28,7 @@ jobs:
 
     - name: Run document extractor and save HTTP logs
       run: |
-        run: python3.12 Https_errors/doc_extractor.py | grep "HTTP Request" > http_logs.txt
+        python3.12 Https_errors/doc_extractor.py | grep "HTTP Request" > http_logs.txt
 
     - name: Analyze HTTP responses
       run: |
