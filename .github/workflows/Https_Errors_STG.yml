@@ -1,0 +1,35 @@
+name: Https Errors-ADE SDK Test - STG
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  Https_Errors_STG:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install agentic-doc manually
+      run: |
+        python -m pip install --upgrade pip
+        pip install agentic-doc
+
+    - name: Set API Key as env variable
+      env:
+        VISION_AGENT_API_KEY: ${{ secrets.VISION_AGENT_API_KEY }}
+      run: echo "API key set"
+
+    - name: Run document extractor and save HTTP logs
+      run: |
+        run: python3.12 Https_errors/doc_extractor.py | grep "HTTP Request" > http_logs.txt
+
+    - name: Analyze HTTP responses
+      run: |
+        python3.12 Https_errors/https_errors_counter.py
