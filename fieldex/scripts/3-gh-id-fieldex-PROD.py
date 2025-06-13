@@ -6,7 +6,7 @@ def process_documents(retry_count=2):
     headers = {"Authorization": f"Basic {VA_API_KEY}"}
     url = "https://api.va.landing.ai/v1/tools/agentic-document-analysis"
 
-    base_pdf_path = "fieldex/files"
+    base_pdf_path = r"fieldex/files"
     pdf_name = "PDF-id-cards.pdf"
     pdf_path = f"{base_pdf_path}/{pdf_name}"
 
