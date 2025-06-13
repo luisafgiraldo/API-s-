@@ -6,12 +6,12 @@ def process_documents(retry_count=2):
     headers = {"Authorization": f"Basic {VA_API_KEY}"}
     url = "https://api.va.staging.landing.ai/v1/tools/agentic-document-analysis"
 
-    base_pdf_path = r"C:\Users\danie\Documents\Testing\VA\fieldex\files"
+    base_pdf_path = r"fieldex\files"
     pdf_name = "PDF-id-cards.pdf"
     pdf_path = f"{base_pdf_path}/{pdf_name}"
 
     schema_name = "idcards-schema-def.json"
-    base_schema_path = r"C:\Users\danie\Documents\Testing\VA\fieldex\schemas"
+    base_schema_path = r"fieldex\schemas"
     schema_path = f"{base_schema_path}/{schema_name}"
 
     with open(schema_path, "r") as file:
