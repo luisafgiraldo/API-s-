@@ -1,4 +1,4 @@
-name: Run-FieldEx test Pdf with severaldocs-PROD
+name: Run-FieldEx-Pdf with severaldocs-PROD
 
 on:
   workflow_dispatch: 

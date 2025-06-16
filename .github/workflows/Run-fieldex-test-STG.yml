@@ -1,4 +1,4 @@
-name: Run-FieldEx test Pdf with severaldocs-STG
+name: Run-FieldEx-Pdf with severaldocs-STG
 
 on:
   workflow_dispatch: 
