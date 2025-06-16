@@ -23,4 +23,4 @@ jobs:
           pip install requests
       
     - name: Run Field Extraction script 
-      run: python fieldex/scripts/3-gh-id-fieldex-STG.py
+      run: python fieldex/scripts/idcards-fieldex-STG.py
