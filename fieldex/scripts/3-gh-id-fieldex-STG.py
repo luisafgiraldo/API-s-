@@ -7,7 +7,7 @@ def process_documents(retry_count=2):
     url = "https://api.va.staging.landing.ai/v1/tools/agentic-document-analysis"
 
     base_pdf_path = r"fieldex/files"
-    pdf_name =  "PDF-id-cards.pdf"
+    pdf_name = "PDF-id-cards.pdf"
     pdf_path = f"{base_pdf_path}/{pdf_name}"
 
     schema_name = "idcards-schema-def.json"
