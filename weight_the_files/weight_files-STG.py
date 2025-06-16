@@ -9,6 +9,9 @@ headers = {
 }
 
 
+FAKE_LARGE_IMAGE_PATH = "simulated_oversized_image.png"
+
+
 test_files = [
     {
         "type": "image",
@@ -27,11 +30,17 @@ test_files = [
     },
     {
         "type": "image",
-        "path": "weight_the_files/pdf/random_6000x6000.png",
+        "path": FAKE_LARGE_IMAGE_PATH,
         "expected_status": 422,
         "expected_message": "Image size should be less than 50MB."
     },
 ]
+
+
+if not os.path.exists(FAKE_LARGE_IMAGE_PATH):
+    print(f"🛠️ Creating fake image: {FAKE_LARGE_IMAGE_PATH} (51MB)")
+    with open(FAKE_LARGE_IMAGE_PATH, "wb") as f:
+        f.write(b"\x89PNG\r\n\x1a\n" + b"0" * (51 * 1024 * 1024))  # 51MB fake PNG content
 
 for test_file in test_files:
     file_type = test_file["type"]
@@ -62,12 +71,12 @@ for test_file in test_files:
 
         print(f"⏱️ Request duration: {minutes} minutes and {seconds:.3f} seconds")
 
-     
+      
         assert response.status_code == expected_status, (
             f"❌ Expected status {expected_status}, but got {response.status_code} for file {file_path}"
         )
 
-   
+
         if expected_status == 422 and expected_message:
             assert response_json is not None, "❌ Expected JSON response but got None."
             assert "message" in response_json, "❌ Response JSON does not contain 'message' key."
@@ -76,3 +85,8 @@ for test_file in test_files:
             )
 
 print("\n✅ All tests passed successfully.")
+
+
+if os.path.exists(FAKE_LARGE_IMAGE_PATH):
+    os.remove(FAKE_LARGE_IMAGE_PATH)
+    print(f"🧹 Deleted simulated file: {FAKE_LARGE_IMAGE_PATH}")
