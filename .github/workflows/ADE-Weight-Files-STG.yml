@@ -20,5 +20,5 @@ jobs:
         run: pip install requests
 
       - name: Run ADE-Weight-Files-STG
-        run: python weight_the_files/weight_files.py
+        run: python weight_the_files/weight_files-STG.py
 
