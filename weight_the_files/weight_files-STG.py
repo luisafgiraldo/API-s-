@@ -36,6 +36,7 @@ test_files = [
     },
 ]
 
+results_summary = []
 
 if not os.path.exists(FAKE_LARGE_IMAGE_PATH):
     print(f"🛠️ Creating fake image: {FAKE_LARGE_IMAGE_PATH} (51MB)")
@@ -71,12 +72,12 @@ for test_file in test_files:
 
         print(f"⏱️ Request duration: {minutes} minutes and {seconds:.3f} seconds")
 
-      
+        
         assert response.status_code == expected_status, (
             f"❌ Expected status {expected_status}, but got {response.status_code} for file {file_path}"
         )
 
-
+        
         if expected_status == 422 and expected_message:
             assert response_json is not None, "❌ Expected JSON response but got None."
             assert "message" in response_json, "❌ Response JSON does not contain 'message' key."
@@ -84,9 +85,20 @@ for test_file in test_files:
                 f"❌ Expected message '{expected_message}', but got '{response_json['message']}'"
             )
 
-print("\n✅ All tests passed successfully.")
+      
+        results_summary.append({
+            "file": os.path.basename(file_path),
+            "expected": expected_status,
+            "actual": response.status_code,
+            "status": "✅ Passed" if response.status_code == expected_status else "❌ Failed"
+        })
+
+
+print("\n📋 Test Summary:")
+for result in results_summary:
+    print(f"- {result['file']}: Expected {result['expected']}, Got {result['actual']} → {result['status']}")
 
 
 if os.path.exists(FAKE_LARGE_IMAGE_PATH):
     os.remove(FAKE_LARGE_IMAGE_PATH)
-    print(f"🧹 Deleted simulated file: {FAKE_LARGE_IMAGE_PATH}")
+    print(f"\n🧹 Deleted simulated file: {FAKE_LARGE_IMAGE_PATH}")
