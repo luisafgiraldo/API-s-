@@ -3,40 +3,43 @@
   "properties": {
     "values": {
       "type": "array",
+      "description": "This array should capture the information of all the documents contained in the processed pdf. Each page contains information as each page contains one ID card. Make sure to capture the information in each page.",
       "items": {
         "type": "object",
         "properties": {
-          "Name": {
+          "name": {
             "type": "string",
             "description": "Full name of the individual"
           },
-          "ID number": {
-            "type": "integer",
+          "idNumber": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
             "description": "Unique identification number of the individual"
           },
-          "Address": {
+          "address": {
             "type": "string",
             "description": "Residential address of the individual"
           },
-          "Restrictions": {
+          "restrictions": {
             "type": "boolean",
             "description": "Indicates if there are any restrictions/disabilities on the individual"
           },
-          "Date of birth": {
-            "type": "string",
+          "dateOfBirth": {
+            "type": ["string", "null"],
             "format": "date",
             "description": "Date of birth of the individual in YYYY-MM-DD format"
           }
         },
         "required": [
-          "Name",
-          "ID number",
-          "Address",
-          "Restrictions",
-          "Date of birth"
+          "name",
+          "idNumber",
+          "address",
+          "restrictions",
+          "dateOfBirth"
         ]
       }
     }
   },
   "required": ["values"]
 }
+

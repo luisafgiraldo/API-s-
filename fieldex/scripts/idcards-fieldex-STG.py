@@ -31,11 +31,11 @@ def process_documents(retry_count=2):
 
     # Initialize a dictionary to hold counts for each field
     field_counts = {
-        "Name": 0,
-        "ID number": 0,
-        "Address": 0,
-        "Restrictions": 0,
-        "Date of birth": 0,
+        "name": 0,
+        "idNumber": 0,
+        "address": 0,
+        "restrictions": 0,
+        "dateOfBirth": 0,
     }
 
     # Assuming the extracted data follows the new schema and the information is under 'values'
@@ -80,15 +80,7 @@ while retry_attempts <= max_retries:
             raise  # Re-raise the last exception after max retries
         else:
             print("Retrying...")
-# Validación de la respuesta
-status_code = response.status_code
-info = response.json()
-
-print(f"\nStatus code: {status_code}")
-
-# Verifica las claves presentes
-print(f"Response keys: {info.keys()}")
-
+            
 # Si es 206, hubo un error parcial en la extracción
 if status_code == 206:
     print("⚠️  Error de extracción detectado (status 206).")
