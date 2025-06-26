@@ -80,6 +80,32 @@ while retry_attempts <= max_retries:
             raise  # Re-raise the last exception after max retries
         else:
             print("Retrying...")
+# Validación de la respuesta
+status_code = response.status_code
+info = response.json()
+
+print(f"\nStatus code: {status_code}")
+
+# Verifica las claves presentes
+print(f"Response keys: {info.keys()}")
+
+# Si es 206, hubo un error parcial en la extracción
+if status_code == 206:
+    print("⚠️  Error de extracción detectado (status 206).")
+    extraction_errors = info.get("extraction_error")
+    print("Extraction errors:", extraction_errors)
+else:
+    # Manejo normal si es 200
+    output_data = info.get("data", {})
+    extracted_info = output_data.get("extracted_schema", {})
+    print("✅ Extracción exitosa:")
+    print(extracted_info)
+
+# Opcional: manejo de errores adicionales
+if "errors" in info:
+    print("\n📌 Otros errores reportados:")
+    print(info["errors"])
+
 
 
 #------------------------------------------------------------------------------------------------------
